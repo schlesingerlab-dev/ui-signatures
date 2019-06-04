@@ -1,60 +1,118 @@
-#!/usr/bin/env python3                                                                                # -*- coding: utf-8 -*- 
+#!/usr/bin/env python3                                                                     
+# -*- coding: utf-8 -*- 
 
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 
+import base64
+import datetime
+import io
+import dash_table
+import pandas as pd
+
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div([
-    html.H1('Welcome to the Gene/Uniprot Expression Characterization Server'),
+    html.H1(children='Welcome to the Gene/Uniprot Expression Characterization Server',
+            style={
+                'textAlign': 'center'
+                }
+    ),
 
     html.Div('''
         Please input the file of  a line separated list of genes or uniprot codes and select the output you would like
-    '''),
+    ''',
+        style={
+                'textAlign': 'center'
+               }
+        ),
    
     html.Div([
-            html.Label('File Name'),
-            dcc.Input(id='file_name', value=None, type='text'),
 
-            html.Label('Please select the outputs you would like from the server (it is possible to select more than one) and then press the submit button'),
-            dcc.Dropdown(
+    dcc.Upload(
+        id='upload_data',
+        children=html.Div([
+            'Drag and Drop or ',
+            html.A('Select Files')
+        ]),
+        style={
+            'width': '90%',
+            'height': '60px',
+            'lineHeight': '60px',
+            'borderWidth': '1px',
+            'borderStyle': 'dashed',
+            'borderRadius': '5px',
+            'textAlign': 'center',
+            'margin': '10px'
+        },
+            multiple=True
+    ),
+    html.Div(id='output_data_upload'),
+
+            html.Label('Please select the output you would like from the server and then press the submit button'),
+            dcc.RadioItems(
                 id='functions',
                 options=[
-                {'label': 'Meta-Signatures', 'value': 'metasig'},
-                {'label': 'Future Options', 'value': 'TBD'}
-                ],
-                value=[],
-                multi=True)
+                {'label': 'Fold', 'value': 'fold'},
+                {'label': 'Family', 'value': 'family'},
+                {'label': 'Super Family', 'value': 'super_family'},
+                {'label': 'Domain', 'value': 'domain'}
+                ]
+                )
            ]),
-
+    
+    html.Hr(),
+    
     html.Button('Submit', id='button'),
-    html.Div(id='output_container_button',
-             children='Enter a value and press submit')
-
+    html.Div(id='output_container_button')
     ])
+
+def parse_contents(contents, filename):
+    content_type, content_string = contents.split(',')
+
+    decoded = base64.b64decode(content_string)
+    try:
+        if filename[-3:] == 'csv':
+            df = pd.read_csv(
+                io.StringIO(decoded.decode('utf-8')),
+                usecols=[0],
+                header=None)
+        elif filename[-3:] == 'xls':
+            df = pd.read_excel(io.BytesIO(decoded),
+                usecols=[0],
+                header=None)
+    except Exception as e:
+        print(e)
+        return html.Div([
+            'There was an error processing this file.'
+        ])
+
+    return df[0].tolist()
 
 @app.callback(
     Output('output_container_button','children'),
-    [Input('button', 'n_clicks'),
-     Input('file_name', 'value'),
-     Input('functions', 'value')])
+    [Input('upload_data', 'contents'), 
+     Input('upload_data', 'filename'),
+     Input('functions', 'value'),
+     Input('button', 'n_clicks')])
 
-#    Output('output-container-button', 'children'),
-#    [Input('button', 'n_clicks'),
-#     Input('functions','value')],
-#    [State('file_name', 'value')])
-
-def update_output(n_clicks, file_name, functions):
-    if n_clicks != None:
-        return 'The input file  was "{}" and the actions selected are {} '.format(
-        file_name,
-        functions
-        )
-
+def update_output(list_of_contents, list_of_names, value, n_clicks):
+    if n_clicks is not None:
+        if list_of_contents is None:
+            n_clicks = None
+            return 'Please submit a file'
+        if value is None:
+            n_clicks = None
+            return 'Please select an output'
+        children = [
+            parse_contents(c, n) for c, n in
+            zip(list_of_contents, list_of_names)]
+        for child in children:
+            print(child)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
