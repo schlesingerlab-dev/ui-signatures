@@ -17,14 +17,14 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div([
-    html.H1(children='Welcome to the Gene/Uniprot Expression Characterization Server',
+    html.H1(children='Welcome to the Gene Expression Characterization Server',
             style={
                 'textAlign': 'center'
                 }
     ),
 
     html.Div('''
-        Please input the file of  a line separated list of genes or uniprot codes and select the output you would like
+        Please input the file of  a line separated list of genes or uniprot codes or paste a list of genes in the box and select the output you would like
     ''',
         style={
                 'textAlign': 'center'
@@ -51,7 +51,13 @@ app.layout = html.Div([
         },
             multiple=True
     ),
-    html.Div(id='output_data_upload'),
+    html.Div([
+        dcc.Textarea(
+           placeholder='Enter a comma separated list of genes...',
+           style={
+                 'width':'50%'
+           }
+    ),
 
             html.Label('Please select the output you would like from the server and then press the submit button'),
             dcc.RadioItems(
@@ -70,6 +76,7 @@ app.layout = html.Div([
     html.Button('Submit', id='button'),
     html.Div(id='output_container_button')
     ])
+])
 
 def parse_contents(contents, filename):
     content_type, content_string = contents.split(',')
