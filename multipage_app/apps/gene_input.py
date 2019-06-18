@@ -499,7 +499,7 @@ def update_output(n_clicks, filename, file_contents, gene_list, id_type, val_dim
     if gene_list:
         gene_file_from_list(gene_list, local_gene_file)
 
-    if './generated_files/'+ name_file_out  not in os.listdir('./generated_files/'):
+    if name_file_out not in os.listdir('./generated_files/'):
         os.mkdir('./generated_files/'+ name_file_out +'/')
 
     path_file_out = './generated_files/' + name_file_out + '/' + name_file_out

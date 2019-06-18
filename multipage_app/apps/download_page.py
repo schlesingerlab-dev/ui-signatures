@@ -17,7 +17,11 @@ import math
 import os
 from flask import send_file
 from zipfile import ZipFile
+import random
+import string
 from app import app
+
+download_session_id = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(10)])
 
 #################
 # Functions
@@ -38,6 +42,14 @@ def make_volcano(pathname):
 # App Layout
 
 layout = html.Div([
+    # Hidden Div for storing session id
+    html.Div(
+        children=download_session_id,
+        id='session_id',
+        style={
+            'display':'none'
+        }
+    ),
     # Page heading
     html.H3(
         'Download Results',
@@ -195,21 +207,23 @@ def show_plot(type_graph, pathname):
 @app.callback(
     Output('download-zip', 'href'),
     [Input('download-zip', 'n_clicks')],
-    [State('url', 'pathname')]
+    [State('url', 'pathname'),
+     State('session_id', 'children')]
 )
 
-def generate_report_url(n_clicks, pathname):
+def generate_report_url(n_clicks, pathname, session_id_val):
     os.chdir('./generated_files')
     pathname = pathname[pathname.rfind('/')+1:]
-    if 'StructuralSignatures.zip' not in os.listdir('./' + pathname):
-        zip_file = ZipFile('./' + pathname + '/StructuralSignatures.zip', 'w')
+    if session_id_val + '.zip' not in os.listdir('./'):
+        zip_file = ZipFile('./' + session_id_val + '.zip', 'w')
         for file in os.listdir('./' + pathname):
-            if file != 'StructuralSignatures.zip':
-                zip_file.write('./' + pathname + '/' + file)
+            zip_file.write('./' + pathname + '/' + file)
     os.chdir('..')
     return '/dash/urldownload'
+
+path_stuff = './generated_files/OUT/StructuralSignatures.zip'
 
 @app.server.route('/dash/urldownload')
 
 def generate_download_url():
-    return send_file('./generated_files/OUT/StructuralSignatures.zip', attachment_filename = 'StructuralSignatures.zip', as_attachment = True)
+    return send_file('./generated_files/' + download_session_id + '.zip', attachment_filename = 'StructuralSignatures.zip', as_attachment = True)
