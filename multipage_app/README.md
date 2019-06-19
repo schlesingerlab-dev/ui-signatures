@@ -1,13 +1,21 @@
 # Structural Signatures Dash App
 Code for "Structural Signatures Dash App"
 
+## Instructions:
+
+to run the app: run run_me.py file with python 3
+
 ## Dependancies: 
+
+### For the app:
 
 python=3
 
 dash
 
 pandas
+
+### For structural signatures:
 
 R>=3.0
 
