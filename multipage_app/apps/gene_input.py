@@ -144,7 +144,7 @@ layout = html.Div([
                     }
                 ),
                 html.P(
-                    'This server generates structural signatures of gene lists',
+                    'Identification of robust gene expression signatures using protein structure enrichment and machine learning',
                     style={
                         'textAlign': 'center'
                     }
