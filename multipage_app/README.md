@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Structural Signatures
 Code for "Structural Signatures Dash App"
 
@@ -14,6 +15,8 @@ Perl DBl
 Perl Parallel Fork Manager
 sqlite>3.0
 =======
+=======
+>>>>>>> 3c8802db5f08a0061df78d27503ca745b7d6be22
 # Structural Signatures Dash App
 Code for "Structural Signatures Dash App"
 
@@ -44,4 +47,7 @@ Perl DBl
 Perl Parallel Fork Manager
 
 sqlite>3.0
+<<<<<<< HEAD
+>>>>>>> 3c8802db5f08a0061df78d27503ca745b7d6be22
+=======
 >>>>>>> 3c8802db5f08a0061df78d27503ca745b7d6be22
