@@ -66,9 +66,5 @@ def delete_bad_struct_sig_files(n_clicks, pathname):
     pathname = pathname[pathname.rfind('/')+1:]
     shutil.rmtree('./generated_files/' + pathname)
     os.remove('./generated_files/' + pathname + '_struct_sig_sucess.txt')
-    # files_to_rm = glob.glob('./generated_files/' + pathname + '*')
-    # print (files_to_rm)
-    # for file in files_to_rm:
-    #     os.remove(file)
 
     
