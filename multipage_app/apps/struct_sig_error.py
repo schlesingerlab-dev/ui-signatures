@@ -14,6 +14,7 @@ from dash.dependencies import Input, Output, State
 import glob
 import os
 from app import app
+import shutil
 
 #################
 # App Layout
@@ -63,8 +64,11 @@ def delete_bad_struct_sig_files(n_clicks, pathname):
         return None
 
     pathname = pathname[pathname.rfind('/')+1:]
-    files_to_rm = glob.glob('./generated_files/' + pathname + '*')
-    for file in files_to_rm:
-        os.remove(file)
+    shutil.rmtree('./generated_files/' + pathname)
+    os.remove('./generated_files/' + pathname + '_struct_sig_sucess.txt')
+    # files_to_rm = glob.glob('./generated_files/' + pathname + '*')
+    # print (files_to_rm)
+    # for file in files_to_rm:
+    #     os.remove(file)
 
     
