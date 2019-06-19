@@ -26,9 +26,9 @@ download_session_id = ''.join([random.choice(string.ascii_letters + string.digit
 #################
 # Functions
 
-def make_volcano(pathname):
+def make_volcano(pathname, feature_type):
     pathname = pathname[pathname.rfind('/')+1:]
-    df = pd.read_csv('./generated_files/' + pathname + '/' + pathname + '-domain-enrichments.csv')
+    df = pd.read_csv('./generated_files/' + pathname + '/' + pathname + feature_type)
     x = df['log_fold_change'].tolist()
     text = df['structure'].tolist()
     y_pvalue = df['pvalue'].tolist()
@@ -137,6 +137,9 @@ layout = html.Div([
         id = 'volcano_plot',
         style={'display':'none'} 
     ),
+    # html.Div(
+    #     id='display_volcano_click'
+    # ),
     html.Hr(),
     html.Div(id='test'),
     html.Hr(),
@@ -185,23 +188,69 @@ def display_value(href):
 
 def show_plot(type_graph, pathname):
     if 'volcano' in type_graph:
-        x,y,text = make_volcano(pathname)
+        x_domain, y_domain, text_domain = make_volcano(pathname, '-domain-enrichments.csv')
+        x_family, y_family, text_family = make_volcano(pathname, '-family-enrichments.csv')
+        x_fold, y_fold, text_fold = make_volcano(pathname, '-fold-enrichments.csv')
+        x_superfam, y_superfam, text_superfam = make_volcano(pathname, '-superfam-enrichments.csv')
         return[{
-            'data':[{
-                'x': x,
-                'y': y,
+            'data':[
+                {
+                'x': x_domain,
+                'y': y_domain,
                 'mode':'markers',
-                'text':text
-            }],
+                'name':'Domain',
+                'text':text_domain
+                },
+                {
+                'x': x_family,
+                'y': y_family,
+                'mode':'markers',
+                'name':'Family',
+                'text':text_family   
+                },
+                {
+                'x': x_fold,
+                'y': y_fold,
+                'mode':'markers',
+                'name':'Fold',
+                'text':text_fold   
+                },
+                {
+                'x': x_superfam,
+                'y': y_superfam,
+                'mode':'markers',
+                'name':'Super Family',
+                'text':text_superfam   
+                }
+            ],
             'layout':{
-                'title': 'Volcano Plot of Domain Enrichments',
+                'title': 'Volcano Plot of Enrichments',
                 'xaxis': {'title':'Logfold Change'},
                 'yaxis': {'title': '-log(p value)'},
+                'layout': {'clickmode': 'event+select'}
             }
         },
         {}
         ]
     return [{'data': [{'x': [], 'y': []}]}, {'display':'none'}]
+
+# # Displays structure corresponding to the point selected on the volcano plot
+# @app.callback(
+#     Output('display_volcano_click', 'children'),
+#     [Input('volcano_plot', 'clickData')]
+# )
+
+# def display_volcano_struct(clickData):
+#     if clickData == None:
+#         return None
+#     for point in clickData['points']:
+#         if point['curveNumber'] == 0:
+#             pass
+#             # use parent child doc
+#         else:
+#             pass
+#             #use scop total stable 
+#     return len(clickData['points'])
 
 # Downloads files on click of button
 @app.callback(
@@ -212,16 +261,15 @@ def show_plot(type_graph, pathname):
 )
 
 def generate_report_url(n_clicks, pathname, session_id_val):
-    os.chdir('./generated_files')
-    pathname = pathname[pathname.rfind('/')+1:]
-    if session_id_val + '.zip' not in os.listdir('./'):
-        zip_file = ZipFile('./' + session_id_val + '.zip', 'w')
-        for file in os.listdir('./' + pathname):
-            zip_file.write('./' + pathname + '/' + file)
-    os.chdir('..')
+    if n_clicks != 0:
+        os.chdir('./generated_files')
+        pathname = pathname[pathname.rfind('/')+1:]
+        if session_id_val + '.zip' not in os.listdir('./'):
+            zip_file = ZipFile('./' + session_id_val + '.zip', 'w')
+            for file in os.listdir('./' + pathname):
+                zip_file.write('./' + pathname + '/' + file)
+        os.chdir('..')
     return '/dash/urldownload'
-
-path_stuff = './generated_files/OUT/StructuralSignatures.zip'
 
 @app.server.route('/dash/urldownload')
 
