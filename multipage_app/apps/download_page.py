@@ -26,17 +26,27 @@ download_session_id = ''.join([random.choice(string.ascii_letters + string.digit
 #################
 # Functions
 
-def make_volcano(pathname, feature_type):
+def make_df_from_file(pathname, feature_type):
     pathname = pathname[pathname.rfind('/')+1:]
     df = pd.read_csv('./generated_files/' + pathname + '/' + pathname + feature_type)
+    return df
+
+def make_volcano(df):
     x = df['log_fold_change'].tolist()
     text = df['structure'].tolist()
+    bonferroni = df['bonforroni_cutoff'][0]
     y_pvalue = df['pvalue'].tolist()
     y = []
     for pval in y_pvalue:
         y.append(-math.log(pval))
-    return (x,y,text)
-    
+    return (x,y,text,bonferroni)
+
+def get_data_row(df, structure):
+    df_list = pd.Index(df)
+    for row in df_list:
+        if structure == row[0]:
+            return row
+    return None    
 
 #################
 # App Layout
@@ -137,8 +147,8 @@ layout = html.Div([
         id = 'volcano_plot',
         style={'display':'none'} 
     ),
+    html.Div(id='display_volcano_click'),
     html.Hr(),
-    html.Div(id='test'),
     html.Hr(),
     # Back to main page button
     dcc.Link(
@@ -184,11 +194,25 @@ def display_value(href):
 )
 
 def show_plot(type_graph, pathname):
+    # make data frames of csv files
+    df_domain = make_df_from_file(pathname, '-domain-enrichments.csv')
+    df_family = make_df_from_file(pathname, '-family-enrichments.csv')
+    df_fold = make_df_from_file(pathname, '-fold-enrichments.csv')
+    df_superfam = make_df_from_file(pathname, '-superfam-enrichments.csv')
+
+    # make volcano plots
     if 'volcano' in type_graph:
-        x_domain, y_domain, text_domain = make_volcano(pathname, '-domain-enrichments.csv')
-        x_family, y_family, text_family = make_volcano(pathname, '-family-enrichments.csv')
-        x_fold, y_fold, text_fold = make_volcano(pathname, '-fold-enrichments.csv')
-        x_superfam, y_superfam, text_superfam = make_volcano(pathname, '-superfam-enrichments.csv')
+        # get values for volcano plot points
+        x_domain, y_domain, text_domain, bonferroni_domain = make_volcano(df_domain)
+        x_family, y_family, text_family, bonferroni_family = make_volcano(df_family)
+        x_fold, y_fold, text_fold, bonferoni_fold = make_volcano(df_fold)
+        x_superfam, y_superfam, text_superfam, bonferoni_superfam = make_volcano(df_superfam)
+        all_x = set(x_domain + x_family + x_fold + x_superfam)
+        x_min = min(all_x)
+        x_max = max(all_x)
+        max_bonferroni = max([bonferoni_fold, bonferoni_superfam, bonferroni_domain, bonferroni_family])
+
+        # return points to plot
         return[{
             'data':[
                 {
@@ -218,36 +242,97 @@ def show_plot(type_graph, pathname):
                 'mode':'markers',
                 'name':'Super Family',
                 'text':text_superfam   
+                },
+                {
+                'x':[x_max],
+                'y':[5],
+                'name':'-log(p value) = 5',
+                'mode':'lines',
+                'line':
+                    {'color': 'rgb(0, 0, 0)',
+                     'width':2}
+                },
+                {
+                'x':[x_max],
+                'y':[max_bonferroni],
+                'name':'Maximum Bonferroni Correction',
+                'mode':'lines',
+                'line':
+                    {'color': 'rgb(128,128,128)',
+                     'width':2}
                 }
             ],
             'layout':{
                 'title': 'Volcano Plot of Enrichments',
                 'xaxis': {'title':'Logfold Change'},
                 'yaxis': {'title': '-log(p value)'},
-                'layout': {'clickmode': 'event+select'}
+                'layout': {'clickmode': 'event+select'},
+                'shapes':[
+                {
+                'type':'line',
+                'x0':x_min - 0.5,
+                'y0':5,
+                'x1':x_max + 0.5,
+                'y1':5,
+                'line':
+                    {'color': 'rgb(0, 0, 0)',
+                     'width':2}
+                },
+                {
+                'type':'line',
+                'x0':x_min - 0.5,
+                'y0':max_bonferroni,
+                'x1':x_max + 0.5,
+                'y1':max_bonferroni,
+                'line':
+                    {'color': 'rgb(128,128,128)',
+                     'width':2}
+                }
+            ],
             }
         },
         {}
         ]
+
     return [{'data': [{'x': [], 'y': []}]}, {'display':'none'}]
 
-# # Displays structure corresponding to the point selected on the volcano plot
-# @app.callback(
-#     Output('display_volcano_click', 'children'),
-#     [Input('volcano_plot', 'clickData')]
-# )
+# Displays structure info corresponding to the point selected on the volcano plot
+@app.callback(
+    Output('display_volcano_click', 'children'),
+    [Input('volcano_plot', 'clickData'),
+     Input('volcano_plot', 'hoverData')]
+)
 
-# def display_volcano_struct(clickData):
-#     if clickData == None:
-#         return None
-#     for point in clickData['points']:
-#         if point['curveNumber'] == 0:
-#             pass
-#             # use parent child doc
-#         else:
-#             pass
-#             #use scop total stable 
-#     return len(clickData['points'])
+def display_volcano_struct(clickData, hoverData):
+    if clickData == None and hoverData == None:
+        return None
+    point_info_dispay = ''
+    points_to_display = []
+    parentchild_df = pd.read_csv('./bin/structural-signatures-2.0-master/bin/files/ParentChildTreeFile.txt', sep="\n", header=None, names=['row'])
+    parentchild_df_list = pd.Index(parentchild_df)
+    scop_df = pd.read_csv('./bin/structural-signatures-2.0-master/bin/files/scope_total_2.06-stable.txt', sep="|", header=None, names=['type', 'number', 'description'])
+
+    if clickData:
+        points_to_display += clickData['points']
+    if hoverData:
+        points_to_display += hoverData['points']
+    
+    for point in points_to_display:
+        if point['curveNumber'] == 0:
+            # use parent child doc for domain
+            for row in parentchild_df_list:
+                if point['text'] in row[0]:
+                    description = row[0][row[0].find('::')+2:-2]
+                    labeled_description = 'The value ' + point['text'] + ' corresponds to the following structural description: ' + description + '.\n'
+                    point_info_dispay += labeled_description 
+        elif point['curveNumber'] != 4 and point['curveNumber'] != 5:
+            #use scop total stable for family, fold, and superfamily
+            df_row = scop_df.loc[scop_df['number'] == point['text']]
+            description = df_row['description'].values.tolist()[0]
+            labeled_description = 'The value ' + point['text'] + ' corresponds to the following structural description: ' + description + '.\n'
+            point_info_dispay += labeled_description
+
+    return point_info_dispay
 
 # Downloads files on click of button
 @app.callback(

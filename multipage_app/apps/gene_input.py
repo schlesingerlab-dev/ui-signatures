@@ -229,7 +229,7 @@ layout = html.Div([
             ]),
             html.Div([
                 html.Label(
-                    'Does the submission above contain uniprot codes or gene names?',
+                    'Does the submission above contain gene names or uniprot codes?',
                     style={
                         'marginTop':'16px',
                         'marginLeft':'11px'
@@ -238,10 +238,11 @@ layout = html.Div([
                 dcc.RadioItems(
                     id='gene_or_uniprot',
                     options=[
-                        {'label':'Uniprot Codes', 'value': 'uid'},
-                        {'label':'Gene Names', 'value':'gn'}
+                        {'label':'Gene Names', 'value':'gn'},
+                        {'label':'Uniprot Codes', 'value': 'uid'}
+                        
                     ],
-                    value='uid',
+                    value='gn',
                     style={
                         'marginLeft':'11px'
                     }
