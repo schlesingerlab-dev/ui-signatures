@@ -11,7 +11,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from app import app
-from apps import gene_input, struct_sig_run_check, download_page, struct_sig_error, download_error
+from apps import home, gene_input, struct_sig_run_check, download_page, struct_sig_error, download_error
 
 #################
 # App Layout
@@ -33,7 +33,9 @@ app.layout = html.Div([
 )
 
 def display_page(pathname):
-    if pathname == '/apps/app1' or pathname ==  '/' or pathname == '/apps' or pathname == None:
+    if pathname ==  '/' or  pathname == None:
+        return home.layout
+    elif pathname == '/apps/app1' or pathname == '/apps':
         return gene_input.layout
     elif len(pathname) >= 10:
         part_of_path = pathname[:10]

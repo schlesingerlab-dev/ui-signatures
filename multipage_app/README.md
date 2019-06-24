@@ -34,6 +34,8 @@ dash
 
 pandas
 
+dash-dangerously-set-inner-html
+
 ### For structural signatures:
 
 R>=3.0
