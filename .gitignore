@@ -1,3 +1,4 @@
 multipage_app/generated_files/*
 multipage_app/apps/__pycache__/*
 multipage_app/__pycache__/*
+.DS_Store/*
