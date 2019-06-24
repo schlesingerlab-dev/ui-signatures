@@ -506,9 +506,9 @@ def update_output(n_clicks, filename, file_contents, gene_list, id_type, val_dim
 
     # run structural signatures and clean up local gene file afterward
     if val_dimension == '2d':
-        input_str = "./bin/ss2/structural-signatures-2.0.sh -i " + local_gene_file + " -t both -n " + id_type + " -o " + path_file_out  
+        input_str = "./bin/structural-signatures-2.0-master/structural-signatures-2.0.sh -i " + local_gene_file + " -t both -n " + id_type + " -o " + path_file_out  
     else:
-        input_str = "./bin/ss2/structural-signatures-2.0.sh -i " + local_gene_file + " -t both -n " + id_type + " -o " + path_file_out + " -b " + str(num_bootstraps) + " -p " + str(num_para_process)
+        input_str = "./bin/structural-signatures-2.0-master/structural-signatures-2.0.sh -i " + local_gene_file + " -t both -n " + id_type + " -o " + path_file_out + " -b " + str(num_bootstraps) + " -p " + str(num_para_process)
     struct_sig_sucess = subprocess.call(input_str, shell=True)
     os.remove(local_gene_file)
 

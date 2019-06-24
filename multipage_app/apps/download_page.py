@@ -137,9 +137,6 @@ layout = html.Div([
         id = 'volcano_plot',
         style={'display':'none'} 
     ),
-    # html.Div(
-    #     id='display_volcano_click'
-    # ),
     html.Hr(),
     html.Div(id='test'),
     html.Hr(),
