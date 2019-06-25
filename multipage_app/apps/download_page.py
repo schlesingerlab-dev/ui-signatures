@@ -28,11 +28,32 @@ download_session_id = ''.join([random.choice(string.ascii_letters + string.digit
 # Functions
 
 def make_df_from_file(pathname, feature_type):
+    '''
+    Inputs:
+        pathname: (str) filepath
+        feature_type: (str) family, fold, superfamily, domain
+
+    Outputs:
+        df: (pandas dataframe) of the file read
+
+    Description:
+        takes info about which csv file and returns a dataframe of that csv
+    '''
     pathname = pathname[pathname.rfind('/')+1:]
     df = pd.read_csv('./generated_files/' + pathname + '/' + pathname + feature_type)
     return df
 
 def make_volcano(df):
+    '''
+    Inputs:
+        df: (pandas dataframe) with headings (structure, counts_observed, background_counts, number_of_genes_in_set, total_number_proteins_proteome, pvalue, fdr, bonforroni_cutoff, log_fold_change, name)
+
+    Outputs:
+        (tupl) : the log fold change, the -log(p), bonferroni correction
+
+    Description:
+        gets the necesary parts for the volcano plot out of the dataframe
+    '''
     x = df['log_fold_change'].tolist()
     text = df['structure'].tolist()
     bonferroni = df['bonforroni_cutoff'][0]
@@ -40,14 +61,7 @@ def make_volcano(df):
     y = []
     for pval in y_pvalue:
         y.append(-math.log(pval))
-    return (x,y,text,bonferroni)
-
-def get_data_row(df, structure):
-    df_list = pd.Index(df)
-    for row in df_list:
-        if structure == row[0]:
-            return row
-    return None    
+    return (x,y,text,bonferroni)    
 
 #################
 # App Layout
@@ -181,9 +195,9 @@ layout = html.Div([
         id = 'volcano_plot',
         style={'display':'none'} 
     ),
+    # table of volcano plot info
     dash_table.DataTable(
-        id='display_volcano_structure',
-        columns=['ID', 'Display']
+        id='display_volcano_structure'
     ),
     html.Hr(),
     html.Hr(),
@@ -334,19 +348,24 @@ def show_plot(type_graph, pathname):
 
     return [{'data': [{'x': [], 'y': []}]}, {'display':'none'}]
 
-# Displays structure info corresponding to the point selected on the volcano plot
+# Display table of values from click and hover of volcano plot
 @app.callback(
-    [Output('display_volcano_structure', 'data'),
-     Output('display_volcano_structure', 'columns')],
-    [Input('volcano_plot', 'clickData'),
-     Input('volcano_plot', 'hoverData')]
+    [Output('display_volcano_structure','columns'),
+     Output('display_volcano_structure', 'data')],
+     [Input('volcano_plot', 'clickData'),
+     Input('volcano_plot', 'hoverData')],
+     [State('url', 'pathname')]
 )
 
-def display_volcano_struct(clickData, hoverData):
-    if clickData == None and hoverData == None:
-        return None
-    point_info_display = pd.DataFrame(columns=['ID', 'Description'])
+def display_volcano_table(clickData, hoverData, pathname):
+    point_info_display = pd.DataFrame(columns=['ID', 'Description', 'Observed Counts', 'Background Counts', 'Number of Genes', 'Total Number of Proteins', 'p value', 'FDR', 'Bonforroni', 'Log Fold Change'])
     points_to_display = []
+
+    # make data frames of csv files
+    df_domain = make_df_from_file(pathname, '-domain-enrichments.csv')
+    df_family = make_df_from_file(pathname, '-family-enrichments.csv')
+    df_fold = make_df_from_file(pathname, '-fold-enrichments.csv')
+    df_superfam = make_df_from_file(pathname, '-superfam-enrichments.csv')
     parentchild_df = pd.read_csv('./bin/structural-signatures-2.0-master/bin/files/ParentChildTreeFile.txt', sep="\n", header=None, names=['row'])
     scop_df = pd.read_csv('./bin/structural-signatures-2.0-master/bin/files/scope_total_2.06-stable.txt', sep="|", header=None, names=['type', 'number', 'description'])
 
@@ -358,32 +377,57 @@ def display_volcano_struct(clickData, hoverData):
     for point in points_to_display:
         if point['curveNumber'] == 0:
             # use parent child doc for domain
+            df_gen_data_row = df_domain.loc[df_domain['structure'] == point['text']]
+            list_gen_data_row = df_gen_data_row.values.tolist()[0]
             df_row = parentchild_df.loc[parentchild_df['row'].str.contains(point['text'])]
             description_full = df_row['row'].values.tolist()
             if description_full != []:
                 description = description_full[0][description_full[0].find('::')+2:-2]
-                point_info_display = point_info_display.append({'ID':point['text'], 'Description':description}, ignore_index=True)
+                point_info_display = point_info_display.append(
+                    {
+                    'ID':point['text'], 
+                    'Description':description,
+                    'Observed Counts':list_gen_data_row[1], 
+                    'Background Counts':list_gen_data_row[2], 
+                    'Number of Genes':list_gen_data_row[3], 
+                    'Total Number of Proteins':list_gen_data_row[4], 
+                    'p value':list_gen_data_row[5], 
+                    'FDR':list_gen_data_row[6], 
+                    'Bonforroni':list_gen_data_row[7], 
+                    'Log Fold Change':list_gen_data_row[8]
+                    }, 
+                    ignore_index=True)
 
-            # for row in parentchild_df_list:
-            #     if point['text'] in row[0]:
-            #         description = row[0][row[0].find('::')+2:-2]
-            #         labeled_description = 'The value ' + point['text'] + ' corresponds to the following structural description: ' + description + '.\n'
-            #         point_info_dispay += labeled_description 
         elif point['curveNumber'] != 4 and point['curveNumber'] != 5:
             #use scop total stable for family, fold, and superfamily
             df_row = scop_df.loc[scop_df['number'] == point['text']]
             description = df_row['description'].values.tolist()
+            if point['curveNumber'] == 1:
+                df_gen_data_row = df_family.loc[df_family['structure'] == point['text']]
+            elif point['curveNumber'] == 2:
+                df_gen_data_row = df_fold.loc[df_fold['structure'] == point['text']]
+            elif point['curveNumber'] == 3:
+                df_gen_data_row = df_superfam.loc[df_superfam['structure'] == point['text']]
+            list_gen_data_row = df_gen_data_row.values.tolist()[0]
             if description != []:
-                point_info_display = point_info_display.append({'ID':point['text'], 'Description':description[0]}, ignore_index=True)
-            
-            # description = df_row['description'].values.tolist()[0]
-            # labeled_description = 'The value ' + point['text'] + ' corresponds to the following structural description: ' + description + '.\n'
-            # point_info_dispay += labeled_description
-    if points_to_display:
-        data = point_info_display.to_dict('records')
-        # data = list(point_info_display.to_dict('index').values())
-        return [data, ['ID', 'Description']]
-    return [None, None]
+                point_info_display = point_info_display.append(
+                    {
+                    'ID':point['text'], 
+                    'Description':description,
+                    'Observed Counts':list_gen_data_row[1], 
+                    'Background Counts':list_gen_data_row[2], 
+                    'Number of Genes':list_gen_data_row[3], 
+                    'Total Number of Proteins':list_gen_data_row[4], 
+                    'p value':list_gen_data_row[5], 
+                    'FDR':list_gen_data_row[6], 
+                    'Bonforroni':list_gen_data_row[7], 
+                    'Log Fold Change':list_gen_data_row[8]
+                    }, 
+                    ignore_index=True)
+    return [
+        [{"name": i, "id": i} for i in point_info_display.columns],
+        point_info_display.to_dict('records')
+    ]
 
 # Downloads files on click of button
 @app.callback(

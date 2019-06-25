@@ -24,6 +24,19 @@ import dash_table
 import pandas as pd
 from app import app
 
+# load the databases
+df_dict = {}
+structure_types = ['domain', 'family', 'fold', 'superfam']
+
+for structure in structure_types:
+    df_dict['gtex_'+structure] = pd.read_csv('./bin/table_data_explorer/GTeX_ss/allcombined.250.' + structure + '.csv.3',
+                                names=['Structure', 'Observed Counts', 'Background Counts', 'Number of Genes', 'Total Number of Proteins', ' p value', 'FDR', 'Bonforroni', 'Log Fold Change', 'Sample ID', 'Subtissue', 'Organ'])
+    # split the last row of the archs data and adds it to the dictionary of databases
+    edit_archs = pd.read_csv('./bin/table_data_explorer/ARCHS4_ss/allcombined.archs4.' + structure + '.csv',
+    names=['Structure', 'Observed Counts', 'Background Counts', 'Number of Genes', 'Total Number of Proteins', ' p value', 'FDR', 'Bonforroni', 'Log Fold Change', 'temp'])
+    edit_archs[['Sample ID', 'Organ']] = edit_archs.temp.str.split('-',expand=True)
+    df_dict['archs_'+structure] = edit_archs
+
 #################
 #Functions
 
@@ -66,6 +79,7 @@ layout = html.Div([
         ],
     className='navbar-fixed'
     ),
+    # select the database to display data from
     html.Div([
         html.H6(
             'Select the database you would like to search',
@@ -81,30 +95,28 @@ layout = html.Div([
                 {'label':'ARCHS', 'value': 'archs'}
                 
             ],
+            value='gtex',
             style={
                 'margin':'11px'
             }
         ),
-        html.Div([
-            # search database
-            dcc.Input(
-                id='search_text',
-                style={
-                    'marginLeft':'11px',
-                    'marginBottom':'20px'
-                }
-            ),
-            html.Button(
-                'Search',
-                id='search_submit',
-                style={
-                    'marginBottom':'20px'
-                }
-            )
-        ]),
+        # show whether you want to see data for family, fold, superfamily, or domain
+        dcc.Tabs(
+            id='class_tabs',
+            value='domain',
+            vertical=False,
+            children=[
+                dcc.Tab(label='Domain', value='domain'),
+                dcc.Tab(label='Fold', value='fold'),
+                dcc.Tab(label='Family', value='family'),
+                dcc.Tab(label='Superfamily', value='superfam')
+            ]
+        ),
+        # data table
         dash_table.DataTable(
             id='database_display'
         ),
+        # shows if there is no data in the database
         html.H6(
             id='database_error',
             children='The value you searched for could not be found',
@@ -124,27 +136,17 @@ layout = html.Div([
     [Output('database_display', 'columns'),
      Output('database_display', 'data')],
     [Input('database_name', 'value'),
-     Input('search_text', 'value')]
+     Input('class_tabs', 'value')]
     )
 
-def display_table(database_name, search_name):
-    if database_name == 'gtex':
-        df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/solar.csv')
-        if search_name:
-            df_rows = df.loc[df['State'].str.contains(search_name)]
-    else:
-        df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv')
-        if search_name:
-            df_rows = df.loc[df['country'].str.contains(search_name)]
-
-    if not search_name:
-        df_rows = df
-
-    return [
+def display_table(database_name, class_type):
+    df = df_dict[database_name + '_' + class_type].head(10)
+    return[
         [{"name": i, "id": i} for i in df.columns],
-        df_rows.to_dict('records')
+        df.to_dict('records')
     ]
 
+# database error if no data in the database to display
 @app.callback(
     Output('database_error', 'style'),
     [Input('database_display', 'data')]
@@ -154,3 +156,4 @@ def database_search_error(database_data):
     if database_data == []:
         return {}
     return {'display':'none'}
+
