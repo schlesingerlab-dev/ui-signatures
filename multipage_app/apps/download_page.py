@@ -249,6 +249,7 @@ def show_plot(type_graph, pathname):
         x_max = max(all_x)
         max_bonferroni = max([bonferoni_fold, bonferoni_superfam, bonferroni_domain, bonferroni_family])
 
+
         # return points to plot
         return[{
             'data':[
