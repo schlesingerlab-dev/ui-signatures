@@ -136,6 +136,39 @@ def input_valid(filename, file_contents, gene_list, val_dimension, num_bootstrap
 
 layout = html.Div([
             html.Div([
+                #nav bar
+                html.Nav(
+                    html.Div(
+                        children=[
+                            #nav bar title
+                            html.A(
+                                'Structural Signatures',
+                                className='brand-logo',
+                                href='/'
+                            ),
+                            #ul list components
+                            html.Ul(
+                                children=[
+                                    html.Li(html.I(id='home',  className='fa fa-home')),
+                                    html.Li(html.A('Home', href='/')),
+                                    html.Li(html.I(id='search',  className='fa fa-search')),
+                                    html.Li(html.A('Data Explorer', href='/apps/databasenav')),
+                                    html.Li(html.I(id='search',  className='fa fa-asterisk')),
+                                    html.Li(html.A('Generate Structural Signatures', href='/apps/app1')), 
+                                    html.Li(html.I(id='search',  className='fa fa-users')),
+                                    html.Li(html.A('About', href='/apps/about')), 
+                                ],
+                                id='nav-mobile',
+                                className='right hide-off-med-and-down'
+                            ), 
+                        ],
+                        className='nav-wrapper'
+                    ),
+                    style={'background-color':'#4c586f'}),
+                ],
+            className='navbar-fixed'
+            ),
+            html.Div([
                 # Headings for Page
                 html.H1(
                     'Welcome to the Gene Expression Characterization Server',
@@ -153,7 +186,7 @@ layout = html.Div([
             ]),
             html.Div([
                 #File/list input
-                html.Label(
+                html.H6(
                     'Input the file of  a line separated list of genes or uniprot codes or paste a list of genes in the box and select the output you would like',
                     style={
                         'textAlign': 'center'
@@ -180,7 +213,7 @@ layout = html.Div([
                                 'float': 'left',
                             } 
                         ),
-                        html.Label(
+                        html.H6(
                             id='file_name_display',
                             children='None',
                             style={
@@ -228,7 +261,7 @@ layout = html.Div([
                 )
             ]),
             html.Div([
-                html.Label(
+                html.H6(
                     'Does the submission above contain gene names or uniprot codes?',
                     style={
                         'marginTop':'16px',
@@ -250,7 +283,7 @@ layout = html.Div([
             ]),
             html.Div([
                 # Choosing signature dimesnionality (bootstraps and parallel only appear if 3D is chosen 
-                html.Label(
+                html.H6(
                     'Select whether you would like a 2D or 3D signature',
                     style={
                         'marginTop':'11px',
@@ -268,7 +301,7 @@ layout = html.Div([
                         'marginLeft':'11px'
                     }
                 ),
-                html.Label(
+                html.H6(
                     'Select the number of bootstraps (the maximum number is 100)',
                     id='bootstraps_label',
                     style={
@@ -286,7 +319,7 @@ layout = html.Div([
                         'width':'35%'
                     }
                 ),
-                html.Label(
+                html.H6(
                     'Select the number of parallel processes (the maximum number is 2)',
                     id='para_process_label',
                     style={
@@ -307,7 +340,7 @@ layout = html.Div([
             ]),
             html.Div([
                 # Input name of job (filename to export to)
-                html.Label(
+                html.H6(
                     'Submit the name of the job (the filename the job will be exported to)',
                     style={
                         'margin':'11px',

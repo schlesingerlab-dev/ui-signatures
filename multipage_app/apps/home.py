@@ -31,12 +31,16 @@ from app import app
 # external css 
 
 #define the external urls
-external_css = ['https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css']
+# external_css = ['https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css']
+
+external_css = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 for css in external_css:
     app.css.append_css({'external_url': css})
 
-external_js = ['https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js']
+# external_js = ['https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js']
+
+external_js = ['https://codepen.io/chriddyp/pen/bWLwgP.js']
 
 for js in external_js:
   app.scripts.append_script({'external_url': js})

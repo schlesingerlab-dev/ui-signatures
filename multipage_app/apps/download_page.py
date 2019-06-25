@@ -1,7 +1,7 @@
 #################
 # App Description
 '''
-This is the download page for the data from structural signatures
+This is the download page for the data from structural signatures, has a back button to gene_input.py
 '''
 
 ################
@@ -19,6 +19,7 @@ from flask import send_file
 from zipfile import ZipFile
 import random
 import string
+import dash_table
 from app import app
 
 download_session_id = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(10)])
@@ -52,6 +53,39 @@ def get_data_row(df, structure):
 # App Layout
 
 layout = html.Div([
+    html.Div([
+        #nav bar
+        html.Nav(
+            html.Div(
+                children=[
+                    #nav bar title
+                    html.A(
+                        'Structural Signatures',
+                        className='brand-logo',
+                        href='/'
+                    ),
+                    #ul list components
+                    html.Ul(
+                        children=[
+                            html.Li(html.I(id='home',  className='fa fa-home')),
+                            html.Li(html.A('Home', href='/')),
+                            html.Li(html.I(id='search',  className='fa fa-search')),
+                            html.Li(html.A('Data Explorer', href='/apps/databasenav')),
+                            html.Li(html.I(id='search',  className='fa fa-asterisk')),
+                            html.Li(html.A('Generate Structural Signatures', href='/apps/app1')), 
+                            html.Li(html.I(id='search',  className='fa fa-users')),
+                            html.Li(html.A('About', href='/apps/about')), 
+                        ],
+                        id='nav-mobile',
+                        className='right hide-off-med-and-down'
+                    ), 
+                ],
+                className='nav-wrapper'
+            ),
+            style={'background-color':'#4c586f'}),
+        ],
+    className='navbar-fixed'
+    ),
     # Hidden Div for storing session id
     html.Div(
         children=download_session_id,
@@ -69,7 +103,7 @@ layout = html.Div([
     ),
     html.Hr(),
     # Download button label
-    html.Label(
+    html.H6(
         'Click on the button below to download your results:',
         style={
             'marginLeft': '11px',
@@ -102,7 +136,7 @@ layout = html.Div([
         }
 	),
     # Number of days download link is valid message
-    html.Label(
+    html.H6(
         'You will be able to access this personalized link to download your results at a later time for ZZZ days:',
         style={
             'marginLeft': '11px',
@@ -128,7 +162,7 @@ layout = html.Div([
             'textAlign' : 'center'
         }
     ),
-    html.Label(
+    html.H6(
         'Select the graphs you would like to see displayed',
         style={
             'margin' : '11px'
@@ -147,7 +181,10 @@ layout = html.Div([
         id = 'volcano_plot',
         style={'display':'none'} 
     ),
-    html.Div(id='display_volcano_click'),
+    dash_table.DataTable(
+        id='display_volcano_structure',
+        columns=['ID', 'Display']
+    ),
     html.Hr(),
     html.Hr(),
     # Back to main page button
@@ -298,7 +335,8 @@ def show_plot(type_graph, pathname):
 
 # Displays structure info corresponding to the point selected on the volcano plot
 @app.callback(
-    Output('display_volcano_click', 'children'),
+    [Output('display_volcano_structure', 'data'),
+     Output('display_volcano_structure', 'columns')],
     [Input('volcano_plot', 'clickData'),
      Input('volcano_plot', 'hoverData')]
 )
@@ -306,10 +344,9 @@ def show_plot(type_graph, pathname):
 def display_volcano_struct(clickData, hoverData):
     if clickData == None and hoverData == None:
         return None
-    point_info_dispay = ''
+    point_info_display = pd.DataFrame(columns=['ID', 'Description'])
     points_to_display = []
     parentchild_df = pd.read_csv('./bin/structural-signatures-2.0-master/bin/files/ParentChildTreeFile.txt', sep="\n", header=None, names=['row'])
-    parentchild_df_list = pd.Index(parentchild_df)
     scop_df = pd.read_csv('./bin/structural-signatures-2.0-master/bin/files/scope_total_2.06-stable.txt', sep="|", header=None, names=['type', 'number', 'description'])
 
     if clickData:
@@ -320,19 +357,32 @@ def display_volcano_struct(clickData, hoverData):
     for point in points_to_display:
         if point['curveNumber'] == 0:
             # use parent child doc for domain
-            for row in parentchild_df_list:
-                if point['text'] in row[0]:
-                    description = row[0][row[0].find('::')+2:-2]
-                    labeled_description = 'The value ' + point['text'] + ' corresponds to the following structural description: ' + description + '.\n'
-                    point_info_dispay += labeled_description 
+            df_row = parentchild_df.loc[parentchild_df['row'].str.contains(point['text'])]
+            description_full = df_row['row'].values.tolist()
+            if description_full != []:
+                description = description_full[0][description_full[0].find('::')+2:-2]
+                point_info_display = point_info_display.append({'ID':point['text'], 'Description':description}, ignore_index=True)
+
+            # for row in parentchild_df_list:
+            #     if point['text'] in row[0]:
+            #         description = row[0][row[0].find('::')+2:-2]
+            #         labeled_description = 'The value ' + point['text'] + ' corresponds to the following structural description: ' + description + '.\n'
+            #         point_info_dispay += labeled_description 
         elif point['curveNumber'] != 4 and point['curveNumber'] != 5:
             #use scop total stable for family, fold, and superfamily
             df_row = scop_df.loc[scop_df['number'] == point['text']]
-            description = df_row['description'].values.tolist()[0]
-            labeled_description = 'The value ' + point['text'] + ' corresponds to the following structural description: ' + description + '.\n'
-            point_info_dispay += labeled_description
-
-    return point_info_dispay
+            description = df_row['description'].values.tolist()
+            if description != []:
+                point_info_display = point_info_display.append({'ID':point['text'], 'Description':description[0]}, ignore_index=True)
+            
+            # description = df_row['description'].values.tolist()[0]
+            # labeled_description = 'The value ' + point['text'] + ' corresponds to the following structural description: ' + description + '.\n'
+            # point_info_dispay += labeled_description
+    if points_to_display:
+        data = point_info_display.to_dict('records')
+        # data = list(point_info_display.to_dict('index').values())
+        return [data, ['ID', 'Description']]
+    return [None, None]
 
 # Downloads files on click of button
 @app.callback(

@@ -21,6 +21,39 @@ import shutil
 
 layout = html.Div([
     html.Div([
+        #nav bar
+        html.Nav(
+            html.Div(
+                children=[
+                    #nav bar title
+                    html.A(
+                        'Structural Signatures',
+                        className='brand-logo',
+                        href='/'
+                    ),
+                    #ul list components
+                    html.Ul(
+                        children=[
+                            html.Li(html.I(id='home',  className='fa fa-home')),
+                            html.Li(html.A('Home', href='/')),
+                            html.Li(html.I(id='search',  className='fa fa-search')),
+                            html.Li(html.A('Data Explorer', href='/apps/databasenav')),
+                            html.Li(html.I(id='search',  className='fa fa-asterisk')),
+                            html.Li(html.A('Generate Structural Signatures', href='/apps/app1')), 
+                            html.Li(html.I(id='search',  className='fa fa-users')),
+                            html.Li(html.A('About', href='/apps/about')), 
+                        ],
+                        id='nav-mobile',
+                        className='right hide-off-med-and-down'
+                    ), 
+                ],
+                className='nav-wrapper'
+            ),
+            style={'background-color':'#4c586f'}),
+        ],
+    className='navbar-fixed'
+    ),
+    html.Div([
         # Error message
         html.H6(
             'Error: There was an error in the generation of the structural signatures. Please check that your inputs are valid and resubmit',
