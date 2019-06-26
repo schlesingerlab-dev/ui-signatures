@@ -100,6 +100,48 @@ layout = html.Div([
                 'margin':'11px'
             }
         ),
+        # search table
+        html.H6(
+            'Select the field you would like to search:'
+        ),
+        dcc.RadioItems(
+            id='search_type_gtex',
+            options=[
+                {'label':'Structure', 'value':'Structure'},
+                {'label':'Sample ID', 'value': 'Sample ID'},
+                {'label':'Subtissue', 'value':'Subtissue'},
+                {'label':'Organ', 'value':'Organ'}
+                
+            ],
+            value='Structure',
+            style={
+                'margin':'11px'
+            }
+        ),
+        dcc.RadioItems(
+            id='search_type_archs',
+            options=[
+                {'label':'Structure', 'value':'Structure'},
+                {'label':'Sample ID', 'value': 'Sample ID'},
+                {'label':'Organ', 'value':'Organ'}
+                
+            ],
+            value='Structure',
+            style={
+                'margin':'11px'
+            }
+        ),
+        html.Div([
+            # Search table input
+            dcc.Input(
+                id='search_table',
+                style={
+                    'marginLeft':'11px',
+                    'marginBottom':'22px',
+                    'marginTop': '22px'
+                }
+            ),
+        ]),
         # show whether you want to see data for family, fold, superfamily, or domain
         dcc.Tabs(
             id='class_tabs',
@@ -131,16 +173,40 @@ layout = html.Div([
 ################
 # Callbacks
 
+@app.callback(
+    [Output('search_type_gtex', 'style'),
+     Output('search_type_archs', 'style')],
+    [Input('database_name', 'value')]
+)
+
+def search_option_update(database_name):
+    if database_name == 'gtex':
+        return [{}, {'display':'none'}]
+    return [{'display':'none'}, {}]
+
 # displays searchable database table 
 @app.callback(
     [Output('database_display', 'columns'),
      Output('database_display', 'data')],
     [Input('database_name', 'value'),
-     Input('class_tabs', 'value')]
+     Input('class_tabs', 'value'),
+     Input('search_table', 'value')],
+     [State('search_type_gtex', 'value'),
+      State('search_type_archs', 'value')]
     )
 
-def display_table(database_name, class_type):
-    df = df_dict[database_name + '_' + class_type].head(10)
+def display_table(database_name, class_type, search_value, search_type_gtex, search_type_archs):
+    if database_name == 'gtex':
+        search_type_value = search_type_gtex
+    else:
+        search_type_value = search_type_archs
+
+    df_all = df_dict[database_name + '_' + class_type]
+    if search_value:
+        df = df_all.loc[df_all[search_type_value].str.contains(search_value)]
+        df = df.head(10)
+    else:
+        df = df_all.head(10)
     return[
         [{"name": i, "id": i} for i in df.columns],
         df.to_dict('records')
@@ -156,4 +222,5 @@ def database_search_error(database_data):
     if database_data == []:
         return {}
     return {'display':'none'}
+
 
