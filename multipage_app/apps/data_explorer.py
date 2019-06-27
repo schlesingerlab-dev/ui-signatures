@@ -229,8 +229,8 @@ def display_table(database_name, class_type, search_value, search_type_gtex, sea
     if search_value:
         df = df_all.loc[df_all[search_type_value].str.contains(search_value)]
     else:
-        # df = df_all.head(25)
-        df = df_all
+        df = df_all.head(25)
+        #df = df_all
     return[
         [{"name": i, "id": i} for i in df.columns],
         df.to_dict('records')
@@ -256,7 +256,7 @@ def database_search_error(database_data):
 def make_3d_graph(database_value, class_value):
     df = df_dict['3D' + database_value + class_value]
     data_list = []
-    tissue_types = df['tissue'].tolist()
+    tissue_types = df['tissue'].tolist()[1:10]
     for tissue in tissue_types:
         df_rows = df.loc[df['tissue'] == tissue]
         x_val = df_rows['V1']
@@ -274,11 +274,6 @@ def make_3d_graph(database_value, class_value):
                 text=tissue_val,
                 mode='markers',
                 marker={
-                    # 'line':
-                    # {
-                    #     'color':'rgb(255,255,255)',
-                    #     'width': 0.2
-                    # },
                     'opacity': 0.8
                 },
                 name=tissue
