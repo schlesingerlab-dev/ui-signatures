@@ -13,6 +13,7 @@ This page allows the user to explore the database
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 import base64
 import string
@@ -179,20 +180,6 @@ layout = html.Div([
                 'width': '60px',
                 'maxWidth': '75px'
             },
-            # style_data_conditional=[
-            #     {'if': {'column_id': 'Structure'},
-            #     'width': '50px'},
-            #     {'if': {'column_id': 'Observed Counts'},
-            #     'width': '50px'},
-            #     {'if': {'column_id': 'FDR'},
-            #     'width': '50px'},
-            #     {'if': {'column_id': 'Sample ID'},
-            #     'width': '50px'},
-            #     {'if': {'column_id': 'Subtissue'},
-            #     'width': '50px'},
-            #     {'if': {'column_id': 'Organ'},
-            #     'width': '50px'},
-            # ],
             virtualization=True,
             sorting=True
         ),
@@ -242,10 +229,9 @@ def display_table(database_name, class_type, search_value, search_type_gtex, sea
     df_all = df_dict[database_name + '_' + class_type]
     if search_value:
         df = df_all.loc[df_all[search_type_value].str.contains(search_value)]
-        df = df.head(25)
     else:
-        df = df_all.head(25)
-        # df = df_all
+        # df = df_all.head(25)
+        df = df_all
     return[
         [{"name": i, "id": i} for i in df.columns],
         df.to_dict('records')
@@ -271,7 +257,7 @@ def database_search_error(database_data):
 def make_3d_graph(database_value, class_value):
     df = df_dict['3D' + database_value + class_value]
     data_list = []
-    tissue_types = df['tissue'].tolist()[:10]
+    tissue_types = df['tissue'].tolist()
     for tissue in tissue_types:
         df_rows = df.loc[df['tissue'] == tissue]
         x_val = df_rows['V1']
@@ -289,9 +275,21 @@ def make_3d_graph(database_value, class_value):
                 text=tissue_val,
                 mode='markers',
                 marker={
-                    # 'color': tissue_val,
+                    # 'line':
+                    # {
+                    #     'color':'rgb(255,255,255)',
+                    #     'width': 0.2
+                    # },
                     'opacity': 0.8
                 },
                 name=tissue
             ))
-    return {'data': data_list}
+    return {
+        'data': data_list,
+        'layout':{
+                'title': '3D visualization of Data Set',
+                'xaxis': {'title':'tsne 1'},
+                'yaxis': {'title': 'tsne 2'}, 
+                'zaxis': {'title': 'tsne 3'},
+        }
+    }
