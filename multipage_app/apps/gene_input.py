@@ -15,6 +15,7 @@ and sends user to 'calculating page' (struct_sig_run_check.py)
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 import base64
 import string
@@ -155,14 +156,14 @@ layout = html.Div([
                                     html.Li(html.A('Data Explorer', href='/apps/databasenav')),
                                     html.Li(html.I(id='search',  className='fa fa-asterisk')),
                                     html.Li(html.A('Generate Structural Signatures', href='/apps/app1')), 
-                                    html.Li(html.I(id='search',  className='fa fa-users')),
-                                    html.Li(html.A('About', href='/apps/about')), 
+                                    # html.Li(html.I(id='search',  className='fa fa-users')),
+                                    # html.Li(html.A('About', href='/apps/about')), 
                                 ],
                                 id='nav-mobile',
                                 className='right hide-off-med-and-down'
                             ), 
                         ],
-                        className='nav-wrapper'
+                        className='nav-wrapper' 
                     ),
                     style={'background-color':'#4c586f'}),
                 ],
@@ -184,81 +185,85 @@ layout = html.Div([
                 ),
                 html.Hr()
             ]),
+            #File/list input
+            html.H6(
+                'Input the file of  a line separated list of genes or uniprot codes or paste a list of genes in the box and select the output you would like',
+                style={
+                    'textAlign': 'center'
+                }
+            ),
             html.Div([
-                #File/list input
-                html.H6(
-                    'Input the file of  a line separated list of genes or uniprot codes or paste a list of genes in the box and select the output you would like',
-                    style={
-                        'textAlign': 'center'
-                    }
-                ),
-                html.Div(
-                    className='row',
-                    children=[
-                        dcc.Upload(
-                            id='upload_data_dragdrop',
-                            children=html.Div([
-                                'Drag and Drop or ',
-                                html.A('Select File')
-                                ]),
-                            style={
-                                'width': '46%',
-                                'height': '150px',
-                                'lineHeight': '150px',
-                                'borderWidth': '1px',
-                                'borderStyle': 'dashed',
-                                'borderRadius': '5px',
-                                'textAlign': 'center',
-                                'margin': '10px',
-                                'float': 'left',
-                            } 
+                dbc.Row([
+                    dbc.Col([
+                        html.Div(
+                            dcc.Upload(
+                                id='upload_data_dragdrop',
+                                children=html.Div([
+                                    'Drag and Drop or ',
+                                    html.A('Select File')
+                                    ]),
+                                style={
+                                    'width': '95%',
+                                    'height': '150px',
+                                    'lineHeight': '150px',
+                                    'borderWidth': '1px',
+                                    'borderStyle': 'dashed',
+                                    'borderRadius': '5px',
+                                    'textAlign': 'center',
+                                    'margin': '11px',
+                                } 
+                            ),
                         ),
-                        html.H6(
-                            id='file_name_display',
-                            children='None',
-                            style={
-                                'width': '46%',
-                                'height': '65px',
-                                'lineHeight': '65px',
-                                'borderWidth': '1px',
-                                'borderStyle': 'solid',
-                                'borderRadius': '5px',
-                                'textAlign': 'center',
-                                'margin': '10px',
-                                'float': 'left',
-                                'display': 'none'
-                            }
+                        html.Div(
+                            html.H6(
+                                id='file_name_display',
+                                children='None',
+                                style={
+                                    'width': '95%',
+                                    'height': '65px',
+                                    'lineHeight': '65px',
+                                    'borderWidth': '1px',
+                                    'borderStyle': 'solid',
+                                    'borderRadius': '5px',
+                                    'textAlign': 'center',
+                                    'margin': '11px',
+                                    'display': 'none'
+                                } 
+                            )
                         ),
-                        dcc.Textarea(
-                            id='upload_data_paste',
-                            placeholder='Enter a comma separated list of genes...',
-                            style={
-                                'width':'46%',
-                                'height':'150px',
-                                'borderWidth': '1px',
-                                'borderRadius': '5px',
-                                'margin': '11px',
-                                'float': 'right'
-                            }
-                        ),
-                        html.Button(
-                            'Select different file',
-                            id='file_change_select',
-                            style={
-                                'width': '46%',
-                                'height': '65px',
-                                'lineHeight': '65px',
-                                'borderWidth': '1px',
-                                'borderRadius': '5px',
-                                'textAlign': 'center',
-                                'margin': '10px',
-                                'float': 'left',
-                                'display':'none'           
-                            }
+                        html.Div(
+                            html.Button(
+                                'Select different file',
+                                id='file_change_select',
+                                style={
+                                    'width': '95%',
+                                    'height': '65px',
+                                    'lineHeight': '65px',
+                                    'borderWidth': '1px',
+                                    'borderRadius': '5px',
+                                    'textAlign': 'center',
+                                    'margin': '11px',
+                                    'display':'none'           
+                                }
+                            )
                         )
-
-                    ]
-                )
+                    ]),
+                    dbc.Col(
+                        html.Div(
+                            dcc.Textarea(
+                                    id='upload_data_paste',
+                                    placeholder='Enter a comma separated list of genes...',
+                                    style={
+                                        'width':'95%',
+                                        'height':'150px',
+                                        'borderWidth': '1px',
+                                        'borderRadius': '5px',
+                                        'margin': '11px',
+                                    }
+                            )
+                        )
+                    )
+                ])
             ]),
             html.Div([
                 html.H6(
@@ -268,7 +273,7 @@ layout = html.Div([
                         'marginLeft':'11px'
                     }
                 ),
-                dcc.RadioItems(
+                dcc.Dropdown(
                     id='gene_or_uniprot',
                     options=[
                         {'label':'Gene Names', 'value':'gn'},
@@ -277,7 +282,8 @@ layout = html.Div([
                     ],
                     value='gn',
                     style={
-                        'marginLeft':'11px'
+                        'marginLeft':'11px',
+                        'width':'45%'
                     }
                 )
             ]),
@@ -290,7 +296,7 @@ layout = html.Div([
                         'marginLeft':'11px'
                     }
                 ),
-                dcc.RadioItems(
+                dcc.Dropdown(
                     id='dimension',
                     options=[
                         {'label':'2D', 'value':'2d'},
@@ -298,7 +304,8 @@ layout = html.Div([
                     ],
                     value='2d',
                     style={
-                        'marginLeft':'11px'
+                        'marginLeft':'11px',
+                        'width':'45%'
                     }
                 ),
                 html.H6(
@@ -422,36 +429,33 @@ def update_style(dimension):
 
 def update_filename_display(filename):
     file_change_select_dict = {
-        'width': '46%',
+        'width': '95%',
         'height': '65px',
         'lineHeight': '65px',
         'borderWidth': '1px',
         'borderRadius': '5px',
         'textAlign': 'center',
-        'margin': '10px',
-        'float': 'left'           
+        'margin': '11px',
     }
     file_name_display_dict={
-        'width': '46%',
+        'width': '95%',
         'height': '65px',
         'lineHeight': '65px',
         'borderWidth': '1px',
         'borderStyle': 'solid',
         'borderRadius': '5px',
         'textAlign': 'center',
-        'margin': '10px',
-        'float': 'left'
+        'margin': '11px',
     }
     upload_data_dragdrop_dict={
-        'width': '46%',
+        'width': '95%',
         'height': '150px',
         'lineHeight': '150px',
         'borderWidth': '1px',
         'borderStyle': 'dashed',
         'borderRadius': '5px',
         'textAlign': 'center',
-        'margin': '10px',
-        'float': 'left',
+        'margin': '11px',                    
     } 
     if filename != None:
         return [

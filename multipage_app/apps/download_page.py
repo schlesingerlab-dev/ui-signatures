@@ -9,6 +9,7 @@ This is the download page for the data from structural signatures, has a back bu
 
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 import shutil
 import glob
@@ -87,8 +88,8 @@ layout = html.Div([
                             html.Li(html.A('Data Explorer', href='/apps/databasenav')),
                             html.Li(html.I(id='search',  className='fa fa-asterisk')),
                             html.Li(html.A('Generate Structural Signatures', href='/apps/app1')), 
-                            html.Li(html.I(id='search',  className='fa fa-users')),
-                            html.Li(html.A('About', href='/apps/about')), 
+                            # html.Li(html.I(id='search',  className='fa fa-users')),
+                            # html.Li(html.A('About', href='/apps/about')), 
                         ],
                         id='nav-mobile',
                         className='right hide-off-med-and-down'
@@ -190,15 +191,33 @@ layout = html.Div([
         ],
         multi=True
     ),
-    # Volcano Plot
-    dcc.Graph(
-        id = 'volcano_plot',
-        style={'display':'none'} 
-    ),
-    # table of volcano plot info
-    dash_table.DataTable(
-        id='display_volcano_structure'
-    ),
+    html.Div([
+        dbc.Row([
+            dbc.Col(
+                # Volcano Plot
+                dcc.Graph(
+                    id = 'volcano_plot',
+                    style={'display':'none'} 
+                ),
+            ),
+            dbc.Col(
+                # table of volcano plot info
+                dash_table.DataTable(
+                    id='display_volcano_structure',
+                    virtualization=True,
+                    style_table={'overflowX': 'scroll'},
+                    style_cell={
+                        'minWidth': '0px', 'maxWidth': '180px',
+                        'whiteSpace': 'normal'
+                    },
+                    css=[{
+                        'selector': '.dash-cell div.dash-cell-value',
+                        'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'
+                    }],
+                ),
+            )
+        ])
+    ]),
     html.Hr(),
     html.Hr(),
     # Back to main page button
