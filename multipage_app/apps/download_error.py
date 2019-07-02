@@ -38,8 +38,8 @@ layout = html.Div([
                             html.Li(html.A('Data Explorer', href='/apps/databasenav')),
                             html.Li(html.I(id='search',  className='fa fa-asterisk')),
                             html.Li(html.A('Generate Structural Signatures', href='/apps/app1')), 
-                            html.Li(html.I(id='search',  className='fa fa-users')),
-                            html.Li(html.A('About', href='/apps/about')), 
+                            # html.Li(html.I(id='search',  className='fa fa-users')),
+                            # html.Li(html.A('About', href='/apps/about')), 
                         ],
                         id='nav-mobile',
                         className='right hide-off-med-and-down'

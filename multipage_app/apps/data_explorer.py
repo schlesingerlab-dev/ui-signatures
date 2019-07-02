@@ -13,6 +13,7 @@ This page allows the user to explore the database
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 import base64
 import string
@@ -32,13 +33,13 @@ structure_types = ['domain', 'family', 'fold', 'superfam']
 for structure in structure_types:
     edit_gtex = pd.read_csv('./bin/table_data_explorer/GTeX_ss/allcombined.250.' + structure + '.csv.3', 
     names=['Structure', 'Observed Counts', 'Background Counts', 'Number of Genes', 'Total Number of Proteins', 'p value', 'FDR', 'Bonforroni', 'Log Fold Change', 'Sample ID', 'Subtissue', 'Organ'])
-    edit_gtex = edit_gtex.drop(columns=['Background Counts', 'Number of Genes', 'Total Number of Proteins', 'p value', 'Bonforroni', 'Log Fold Change'])
+    edit_gtex = edit_gtex.drop(columns=['Background Counts', 'Number of Genes', 'Total Number of Proteins', 'p value', 'Bonforroni', 'Log Fold Change', 'Sample ID'])
     df_dict['gtex_'+structure] = edit_gtex
     # split the last row of the archs data and adds it to the dictionary of databases
     edit_archs = pd.read_csv('./bin/table_data_explorer/ARCHS4_ss/allcombined.archs4.' + structure + '.csv',
         names=['Structure', 'Observed Counts', 'Background Counts', 'Number of Genes', 'Total Number of Proteins', 'p value', 'FDR', 'Bonforroni', 'Log Fold Change', 'temp'])
     edit_archs[['Sample ID', 'Organ']] = edit_archs.temp.str.split('-',expand=True)
-    edit_archs = edit_archs.drop(columns=['Background Counts', 'Number of Genes', 'Total Number of Proteins', 'p value', 'Bonforroni', 'Log Fold Change'])
+    edit_archs = edit_archs.drop(columns=['Background Counts', 'Number of Genes', 'Total Number of Proteins', 'p value', 'Bonforroni', 'Log Fold Change','Sample ID', 'temp'])
     df_dict['archs_'+structure] = edit_archs
 
     df_dict['3Dgtex' + structure] = pd.read_csv('./bin/autoencoder_data/GTeX/tsne.' + structure + '.csv')
@@ -48,7 +49,6 @@ for structure in structure_types:
 
 #################
 #Functions
-
 
 #################
 # App Layout
@@ -75,8 +75,8 @@ layout = html.Div([
                             html.Li(html.A('Data Explorer', href='/apps/databasenav')),
                             html.Li(html.I(id='search',  className='fa fa-asterisk')),
                             html.Li(html.A('Generate Structural Signatures', href='/apps/app1')), 
-                            html.Li(html.I(id='search',  className='fa fa-users')),
-                            html.Li(html.A('About', href='/apps/about')), 
+                            # html.Li(html.I(id='search',  className='fa fa-users')),
+                            # html.Li(html.A('About', href='/apps/about')), 
                         ],
                         id='nav-mobile',
                         className='right hide-off-med-and-down'
@@ -97,7 +97,7 @@ layout = html.Div([
                 'marginTop': '11px'
             }
         ),
-        dcc.RadioItems(
+        dcc.Dropdown(
             id='database_name',
             options=[
                 {'label':'gTEx', 'value':'gtex'},
@@ -106,54 +106,49 @@ layout = html.Div([
             ],
             value='gtex',
             style={
-                'margin':'11px'
+                'margin':'11px',
+                'width':'45%'
             }
         ),
         # search table
         html.H6(
-            'Select the field you would like to search:'
+            'Select the field you would like to search:',
+            style={
+                'marginLeft':'11px',
+                'marginTop': '20px'
+            }
         ),
-        dcc.RadioItems(
+        dcc.Dropdown(
             id='search_type_gtex',
             options=[
                 {'label':'Structure', 'value':'Structure'},
-                {'label':'Sample ID', 'value': 'Sample ID'},
+                # {'label':'Sample ID', 'value': 'Sample ID'},
                 {'label':'Subtissue', 'value':'Subtissue'},
                 {'label':'Organ', 'value':'Organ'}
                 
             ],
-            value='Structure',
-            style={
-                'margin':'11px'
-            }
+            value='Structure'
         ),
-        dcc.RadioItems(
+        dcc.Dropdown(
             id='search_type_archs',
             options=[
                 {'label':'Structure', 'value':'Structure'},
-                {'label':'Sample ID', 'value': 'Sample ID'},
+                # {'label':'Sample ID', 'value': 'Sample ID'},
                 {'label':'Organ', 'value':'Organ'}
                 
             ],
-            value='Structure',
+            value='Structure'
+        ),
+        # Search table input
+        dcc.Input(
+            id='search_table',
+            placeholder='Start typing to search...',
             style={
-                'margin':'11px'
+                'marginLeft':'11px',
+                'marginBottom':'30px',
+                'marginTop': '11px'
             }
         ),
-        html.Div([
-            # Search table input
-            dcc.Input(
-                id='search_table',
-                style={
-                    'marginLeft':'11px',
-                    'marginBottom':'22px',
-                    'marginTop': '22px'
-                }
-            ),
-            html.Button(
-                'Search'
-            )
-        ]),
         # show whether you want to see data for family, fold, superfamily, or domain
         dcc.Tabs(
             id='class_tabs',
@@ -166,30 +161,46 @@ layout = html.Div([
                 dcc.Tab(label='Superfamily', value='superfam')
             ]
         ),
-        # 3D graph of gene signatures and tissue types
-        dcc.Graph(
-            id='3d_graph'
-        ),
-        # data table
-        dash_table.DataTable(
-            id='database_display',
-            style_cell={
-                'whiteSpace': 'normal',
-                'minWidth': '50px',
-                'width': '60px',
-                'maxWidth': '75px'
-            },
-            virtualization=True,
-            sorting=True
-        ),
-        # shows if there is no data in the database
-        html.H6(
-            id='database_error',
-            children='The value you searched for could not be found',
-            style={
-                'display':'none'
-            }
-        )
+        html.Div([
+            dbc.Row([
+                dbc.Col(
+                    # 3D graph of gene signatures and tissue types
+                    dcc.Graph(
+                        id='3d_graph'
+                    )
+                ),
+                dbc.Col(
+                    html.Div([
+                        # data table
+                        dash_table.DataTable(
+                            id='database_display',
+                            virtualization=True,
+                            style_table={'overflowX': 'scroll'},
+                            style_cell={
+                                'minWidth': '0px', 'maxWidth': '50px',
+                                'whiteSpace': 'normal'
+                            },
+                            css=[{
+                                'selector': '.dash-cell div.dash-cell-value',
+                                'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'
+                            }],
+                        ),
+                        # shows if there is no data in the database
+                        html.H6(
+                            id='database_error',
+                            children='The value you searched for could not be found',
+                            style={
+                                'display':'none'
+                            }
+                        )
+                        ],
+                        style={
+                            'marginTop':'25px'
+                        }
+                    )
+                )
+            ])
+        ]),
     ])
 ])
 
@@ -205,8 +216,8 @@ layout = html.Div([
 
 def search_option_update(database_name):
     if database_name == 'gtex':
-        return [{}, {'display':'none'}]
-    return [{'display':'none'}, {}]
+        return [{'margin':'11px', 'width':'45%'}, {'display':'none'}]
+    return [{'display':'none'}, {'margin':'11px', 'width':'45%'}]
 
 # displays searchable database table 
 @app.callback(
@@ -230,7 +241,11 @@ def display_table(database_name, class_type, search_value, search_type_gtex, sea
         df = df_all.loc[df_all[search_type_value].str.contains(search_value)]
     else:
         df = df_all.head(25)
+<<<<<<< HEAD
         #df = df_all
+=======
+        # df = df_all
+>>>>>>> 74ce1b936b4685445d2034a832211855a4c7ccf8
     return[
         [{"name": i, "id": i} for i in df.columns],
         df.to_dict('records')
@@ -256,7 +271,7 @@ def database_search_error(database_data):
 def make_3d_graph(database_value, class_value):
     df = df_dict['3D' + database_value + class_value]
     data_list = []
-    tissue_types = df['tissue'].tolist()[1:10]
+    tissue_types = set(df['tissue'].tolist()[:20])
     for tissue in tissue_types:
         df_rows = df.loc[df['tissue'] == tissue]
         x_val = df_rows['V1']
