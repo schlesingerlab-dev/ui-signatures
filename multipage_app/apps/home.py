@@ -80,24 +80,38 @@ layout = html.Div( id='main-page-content',children= [
     html.Div(
         html.Center(
         dcc.Markdown('''
+
 ## Welcome to Structural Signatures! 
-#### About the database:
-Structral signatures are blah blah blah 
-We benchmarked structural signatures using blah, as shown below: 
 
-![](static/example.png)
 
-We did some stuff as well!!
-
-![](static/example2.png)
-
-Cool things were discovered and published, woo! 
+#### A database to explore enriched structures in overexpressed and differentially expressed genes. 
 
 ![](static/example3.png)
+
+## What are structural signatures? 
+
+##### Structural signatures are protein domains, families, superfamilies and folds that describe sets of overexpressed and differntially expressed genes.
+
+##### We utilize [Interproscan](http://www.ebi.ac.uk/Tools/services/web/toolform.ebi?tool=iprscan5&sequence=uniprot:KPYM_HUMAN) to assign protein domains and [SCOPe](http://scop.berkeley.edu/) to assign protein families, superfamilies and folds. 
+
+## Why use structural signatures?
+
+##### Between RNA-sequencing experiments, the expression of specific genes can change due to a variety of reasons, such as changes in protcol, laboratory techninque, reference geneome alignment. While an individual gene's expression may vary,  the represention of structural properties of a set of genes (such as protein domains) are more resliant to change. 
+##### As a result, we argue that structural enrichment offers a robust signature for comparing gene expression changes between RNA sequencing experiments. Strucutral enrichment also retains information present in the gene level as well. 
+![](static/figure1.png)
+
+**Figure 1:** Pairwise jaccard coefficients between GTeX Tissues across the top 250 genes and domain, family superfamily and fold enrichments. 
+
+![](static/figure3.png)
+
+**Figure 2:** t-SNE projects of A) the top 250 overexpressed genes from GTeX, B) domain enrichment c) Fold enrichment.  
+
+#
     ''')  
     ) , style={
         # 'backgroundColor':'#f1f0ea',
         # 'border': 'grey',
+        '*#scale':'width:150px; height:100px;', 
         'padding': '6px 0px 0px 8px'} )
 ])
 
