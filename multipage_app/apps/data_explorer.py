@@ -241,11 +241,7 @@ def display_table(database_name, class_type, search_value, search_type_gtex, sea
         df = df_all.loc[df_all[search_type_value].str.contains(search_value)]
     else:
         df = df_all.head(25)
-<<<<<<< HEAD
-        #df = df_all
-=======
         # df = df_all
->>>>>>> 74ce1b936b4685445d2034a832211855a4c7ccf8
     return[
         [{"name": i, "id": i} for i in df.columns],
         df.to_dict('records')
