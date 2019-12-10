@@ -67,6 +67,7 @@ def make_df_from_file(pathname, feature_type):
     '''
     pathname = pathname[pathname.rfind('/')+1:]
     df = pd.read_csv('./generated_files/' + pathname + '/' + pathname + feature_type)
+    # df = df.round(2)
     return df
 
 def make_volcano(df):
@@ -198,7 +199,7 @@ layout = html.Div([
             'textAlign' : 'center',
             'margin-top':30,
             'margin-bottom':30,
-            'color': theme_color5
+            'color': theme_color3
         }
     ),
     html.H6(
@@ -206,7 +207,7 @@ layout = html.Div([
         style={
             'marginLeft':'50px',
             'margin-bottom':15,
-            'color': theme_color5
+            'color': theme_color1
         }
     ),
     dcc.Dropdown(
@@ -245,6 +246,7 @@ layout = html.Div([
             'minWidth': '0px', 'maxWidth': '50px',
             'whiteSpace': 'normal',
             'textAlign': 'center',
+            'font-family':'sans-serif'
         },
         style_cell_conditional=[
             {'if': {'column_id': 'Observed Counts'},
@@ -266,7 +268,7 @@ layout = html.Div([
         # }],
     )),
     ],
-    style={'backgroundColor': theme_color1,
+    style={'backgroundColor': theme_color5,
             'padding': '50px 10px 10px',
             'box-shadow': '5px 5px 5px #6C656C',},
     ),
@@ -284,6 +286,7 @@ layout = html.Div([
         href='/apps',
 	),
     style={'margin-top': 50, 'margin-bottom':50}),
+
     # dcc.Link(
     #     'Back',
     #     href='/apps/app1',
@@ -423,10 +426,10 @@ def show_plot(type_graph, pathname):
             'layout':{
                 'paper_bgcolor':'rgba(0,0,0,0)',
                 'plot_bgcolor':'rgba(0,0,0,0)',
-                'titlefont': {'size':36, 'color': theme_color3},
+                'titlefont': {'size':36, 'color': theme_color1},
                 'height': 500,
                 'width':1000,
-                'font': {'color':theme_color5},
+                'font': {'color':theme_color1},
                 'title': 'Volcano Plot of Enrichments',
                 'xaxis': {'title':'Logfold Change'},
                 'yaxis': {'title': '-log(p value)'},
@@ -474,12 +477,12 @@ def display_volcano_table(clickData, hoverData, pathname):
     points_to_display = []
 
     # make data frames of csv files
-    df_domain = make_df_from_file(pathname, '-domain-enrichments.csv')
-    df_family = make_df_from_file(pathname, '-family-enrichments.csv')
-    df_fold = make_df_from_file(pathname, '-fold-enrichments.csv')
-    df_superfam = make_df_from_file(pathname, '-superfam-enrichments.csv')
-    parentchild_df = pd.read_csv('./bin/structural-signatures-2.0-master/bin/files/ParentChildTreeFile.txt', sep="\n", header=None, names=['row'])
-    scop_df = pd.read_csv('./bin/structural-signatures-2.0-master/bin/files/scope_total_2.06-stable.txt', sep="|", header=None, names=['type', 'number', 'description'])
+    df_domain = make_df_from_file(pathname, '-domain-enrichments.csv').round(2)
+    df_family = make_df_from_file(pathname, '-family-enrichments.csv').round(2)
+    df_fold = make_df_from_file(pathname, '-fold-enrichments.csv').round(2)
+    df_superfam = make_df_from_file(pathname, '-superfam-enrichments.csv').round(2)
+    parentchild_df = pd.read_csv('./bin/structural-signatures-2.0-master/bin/files/ParentChildTreeFile.txt', sep="\n", header=None, names=['row']).round(2)
+    scop_df = pd.read_csv('./bin/structural-signatures-2.0-master/bin/files/scope_total_2.06-stable.txt', sep="|", header=None, names=['type', 'number', 'description']).round(2)
 
     if clickData:
         points_to_display += clickData['points']

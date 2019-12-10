@@ -411,13 +411,27 @@ layout = html.Div([
                         html.H5('Submit'),
                         id='submit_button',
                         style={
+                            'height': '40px',
+                            'width':'200px',
                             'borderRadius': '5px',
                             'color': theme_color3
                         }
                     ),
                     id='page_link'
-                )
-            )
+                ),
+                style={'margin-top': 30, 'margin-bottom':30}
+            ),
+            html.Center(
+            dcc.Link(
+                html.Button(html.H5('Sample Output', style={'color': theme_color3}),
+                style={
+                    'height': '40px',
+                    'width':'150px',
+                    'borderRadius': '5px'
+                }),
+                href='/apps/app3/OUT',
+            ),
+            style={'margin-top': 30, 'margin-bottom':30}),
             ]),
             ],
             style= {'backgroundColor':theme_color4}
@@ -433,6 +447,7 @@ layout = html.Div([
                     'color': theme_color3
                 }
             )),
+            
             # html.Div([
             #     #footer so I dont hit undo at bottom of page
             #     html.Hr(),

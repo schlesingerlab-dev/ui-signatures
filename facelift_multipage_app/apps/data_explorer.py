@@ -51,8 +51,8 @@ sinai_thumb = html.Img(src='data:image/png;base64,{}'.format(encoded_image.decod
                 'margin': 10
             })
 
-tab_style = {'fontWeight': 'bold', 'color':theme_color1}
-tab_selected_style = {'backgroundColor': theme_color1, 'fontWeight':'bold', 'color':theme_color5}
+tab_style = {'fontWeight': 'bold', 'color':theme_color5}
+tab_selected_style = {'backgroundColor': theme_color5, 'fontWeight':'bold', 'color':theme_color1}
 # load the databases
 df_dict = {}
 structure_types = ['domain', 'family', 'fold', 'superfam']
@@ -178,9 +178,9 @@ layout = html.Div([
                 dcc.Tab(label='Superfamily', value='superfam', style=tab_style, selected_style=tab_selected_style)
             ],
             colors={
-            "border": theme_color1,
-            # "primary": theme_color1,
-            "background": theme_color2
+            # "border": theme_color1,
+            "border": theme_color3,
+            "background": theme_color1
             },
         ),
         # html.Center(
@@ -192,7 +192,7 @@ layout = html.Div([
         )
         ],
         style={
-            'backgroundColor':theme_color1
+            'backgroundColor':theme_color5
         },
         ),
         
@@ -269,7 +269,8 @@ layout = html.Div([
                     style_cell={
                         # 'minWidth': '0px', 'maxWidth': '50px',
                         'whiteSpace': 'normal',
-                        'textAlign': 'center'
+                        'textAlign': 'center',
+                        'font-family': 'sans-serif',
                     },
                     style_cell_conditional=[{
                             'if': {'column_id': 'Observed Counts'},
@@ -360,6 +361,19 @@ def display_table(database_name, class_type, search_value, search_type_gtex, sea
     else:
         df = df_all.head(30)
         # df = df_all
+    df = df.round(4)
+
+    num_rows = len(df.index)
+    for row in range(num_rows):
+        organ_subtissue = df.iloc[row,3]
+        organ = df.iloc[row,4]
+        subtissue= organ_subtissue[len(organ)+1:]
+        df.iloc[row,3]= subtissue
+        
+        # if class_type != 'domain':
+        #     struct_change = df.iloc[row,0]
+        #     df.iloc[row,0] = html.Td(html.A(struct_change, href='https://www.schlessingerlab.org/', target="_blank"))
+
     return[
         [{"name": i, "id": i} for i in df.columns],
         df.to_dict('records'),
@@ -388,7 +402,7 @@ def make_3d_graph(database_value, class_value):
     color_list = [theme_color2, '#c9b1c9', '#c97bc9', '#6b406b', '#ab2bab', 
     '#590e59', '#7a5991', '#682f8f','#d7a8ff', '#7200d6',
     '#41007a', '#006aff', '#92bffc', '#134fa1', '#57749c', 
-    theme_color3, '#00bad6', '#006a7a', theme_color5, '#02f7f7',
+    theme_color3, '#00bad6', '#006a7a', theme_color1, '#02f7f7',
     '#065c08', '#2e8a00', '#6c9159','#00ed27','#d0f799', 
     '#95ff00', '#587331', '#325203']
 
@@ -396,7 +410,7 @@ def make_3d_graph(database_value, class_value):
     df = df_dict['3D' + database_value + class_value]
     data_list = []
     # tissue_types = set(df['tissue'].tolist()[:20])
-    tissue_types = set(df['tissue'].tolist())
+    tissue_types = sorted(set(df['tissue'].tolist()))
     for tissue in tissue_types:
         df_rows = df.loc[df['tissue'] == tissue]
         x_val = df_rows['V1']
@@ -425,7 +439,7 @@ def make_3d_graph(database_value, class_value):
         'data': data_list,
         'layout':{
                 'title': '3D Visualization of Data Set',
-                'titlefont': {'size':36, 'color': theme_color5},
+                'titlefont': {'size':36, 'color': theme_color1},
                 'scene': {
                     'xaxis': {'title':'tsne 1'},
                     'yaxis': {'title': 'tsne 2'}, 
@@ -434,6 +448,6 @@ def make_3d_graph(database_value, class_value):
                 'paper_bgcolor':'rgba(0,0,0,0)',
                 'plot_bgcolor':'rgba(0,0,0,0)',
                 'height': 800,
-                'font': {'color':theme_color5}
+                'font': {'color':theme_color1}
         }
     }
