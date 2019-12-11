@@ -1,0 +1,161 @@
+P46527,NULL,IPR003175;IPR029843,NULL,Cyclin-dependent kinase inhibitor;Cyclin-dependent kinase inhibitor 1B
+O95153,IPR003961;IPR035753;IPR035755;IPR001452,IPR035517,Fibronectin type III;RIMS-binding protein- second SH3 domain;RIMS-binding protein- third SH3 domain;SH3 domain,RIMS-binding protein 1
+P07305,IPR005818,IPR005819,Linker histone H1/H5- domain H15,Histone H5
+P07203,NULL,IPR000889,NULL,Glutathione peroxidase
+Q07108,IPR001304;IPR033992,NULL,C-type lectin-like;Natural killer cell receptor-like- C-type lectin-like domain,NULL
+Q9P2R3,IPR020683;IPR000210;IPR000306;IPR017455,NULL,Ankyrin repeat-containing domain;BTB/POZ domain;FYVE zinc finger;Zinc finger- FYVE-related,NULL
+P21673,IPR000182,IPR032957,GNAT domain,Diamine acetyltransferase 1
+Q13813,IPR035825;IPR014837;IPR002048;IPR001452,NULL,Alpha Spectrin- SH3 domain;EF-hand- Ca insensitive;EF-hand domain;SH3 domain,NULL
+P12036,NULL,IPR001664;IPR033183,NULL,Intermediate filament protein;Neurofilament heavy polypeptide
+Q00722,IPR000008;IPR014815;IPR015359;IPR000909;IPR001711,IPR001192;IPR016280;IPR028403,C2 domain;Phospholipase C-beta- C-terminal domain;Phosphoinositide-specific phospholipase C- EF-hand-like domain;Phosphatidylinositol-specific phospholipase C- X domain;Phospholipase C- phosphatidylinositol-specific- Y domain,Phosphoinositide phospholipase C family;Phosphatidylinositol-4- 5-bisphosphate phosphodiesterase beta;1-phosphatidylinositol 4-5-bisphosphate phosphodiesterase beta-2
+P37288,IPR015076;IPR017452,IPR000276;IPR001817;IPR001224,Domain of unknown function DUF1856;GPCR- rhodopsin-like- 7TM,G protein-coupled receptor- rhodopsin-like;Vasopressin receptor;Vasopressin V1A receptor
+Q8IUX7,IPR034243;IPR000421;IPR000834,NULL,AEBP1/CPX- carboxypeptidase domain;Coagulation factor 5/8 C-terminal domain;Peptidase M14- carboxypeptidase A,NULL
+P16455,IPR014048;IPR008332,NULL,Methylated-DNA-[protein]-cysteine S-methyltransferase- DNA binding;Methylguanine DNA methyltransferase- ribonuclease-like domain,NULL
+Q8NEA9,IPR000210,NULL,BTB/POZ domain,NULL
+Q96LL9,IPR001623,NULL,DnaJ domain,NULL
+O43521,IPR014771;IPR015040,IPR017288,Apoptosis- Bim N-terminal;Bcl-x interacting- BH3 domain,Bcl-2-like protein 11
+Q9UBJ2,IPR003593;IPR011527;IPR003439,IPR031239,AAA+ ATPase domain;ABC transporter type 1- transmembrane domain;ABC transporter-like,ATP-binding cassette sub-family D member 2
+P61812,IPR001839;IPR001111,IPR016319;IPR015615;IPR003940,Transforming growth factor-beta- C-terminal;TGF-beta- propeptide,Transforming growth factor-beta;Transforming growth factor-beta-related;Transforming growth factor- beta 2
+P30291,IPR000719,IPR017164,Protein kinase domain,Wee1-like protein kinase
+Q12882,IPR017896;IPR005720;IPR028261;IPR023753,NULL,4Fe-4S ferredoxin-type- iron-sulphur binding domain;Dihydroorotate dehydrogenase domain;Dihydroprymidine dehydrogenase domain II;FAD/NAD(P)-binding domain,NULL
+Q03135,NULL,IPR015504;IPR001612,NULL,Caveolin-1;Caveolin
+O60238,NULL,IPR010548,NULL,BNIP3
+A6ND01,IPR018143,IPR004269,Folate receptor-like,Folate receptor
+Q9UJU2,IPR013558;IPR009071,IPR028769;IPR024940,CTNNB1 binding- N-teminal;High mobility group box domain,Lymphoid enhancer-binding factor 1;Transcription factor TCF/LEF
+P30279,IPR013763;IPR004367;IPR006671,IPR015451,Cyclin-like;Cyclin- C-terminal domain;Cyclin- N-terminal,Cyclin D
+O14944,IPR000742,IPR015497,EGF-like domain,Epidermal growth factor receptor ligand
+Q8WUM9,NULL,IPR001204,NULL,Phosphate transporter
+Q96AJ1,NULL,IPR019366,NULL,Clusterin-associated protein-1
+P18847,IPR004827,IPR000837;IPR029812,Basic-leucine zipper domain,AP-1 transcription factor;cAMP-dependent transcription factor ATF-3
+P24385,IPR013763;IPR004367;IPR006671,IPR015451,Cyclin-like;Cyclin- C-terminal domain;Cyclin- N-terminal,Cyclin D
+P49810,NULL,IPR001493;IPR001108;IPR006639,NULL,Peptidase A22A- presenilin 2;Peptidase A22A- presenilin;Presenilin/signal peptide peptidase
+O15519,IPR001875;IPR001309;IPR015917,NULL,Death effector domain;Peptidase C14-  p20 domain;Peptidase C14A- caspase catalytic domain,NULL
+Q9NP84,NULL,IPR022316,NULL,Tumour necrosis factor receptor 12
+P28907,NULL,IPR003193;IPR033567,NULL,ADP-ribosyl cyclase (CD38/157);ADP-ribosyl cyclase/cyclic ADP-ribose hydrolase 1
+Q96NN9,IPR023753;IPR028202;IPR017941,IPR000103,FAD/NAD(P)-binding domain;Reductase- C-terminal;Rieske [2Fe-2S] iron-sulphur domain,Pyridine nucleotide-disulphide oxidoreductase- class-II
+Q13489,IPR001315;IPR001841,NULL,CARD domain;Zinc finger- RING-type,NULL
+P26583,IPR009071,IPR031075,High mobility group box domain,High mobility group protein HMGB2
+P51884,IPR000372,IPR027219,Leucine-rich repeat N-terminal domain,Lumican
+Q13464,IPR000961;IPR002219;IPR001849;IPR000719;IPR015008,IPR029876;IPR020684,AGC-kinase- C-terminal;Protein kinase C-like- phorbol ester/diacylglycerol-binding domain;Pleckstrin homology domain;Protein kinase domain;Rho binding domain,Rho-associated protein kinase 1;Rho-associated protein kinase 1/2
+P30679,NULL,IPR000654;IPR001019,NULL,G-protein alpha subunit- group Q;Guanine nucleotide binding protein (G-protein)- alpha subunit
+Q02846,IPR001054;IPR001828;IPR011645;IPR000719;IPR001245,NULL,Adenylyl cyclase class-3/4/guanylyl cyclase;Receptor- ligand binding region;Haem NO binding associated;Protein kinase domain;Serine-threonine/tyrosine-protein kinase- catalytic domain,NULL
+P38398,IPR025994;IPR001357;IPR018957;IPR001841,IPR011364;IPR031099,BRCA1- serine-rich domain;BRCT domain;Zinc finger- C3HC4 RING-type;Zinc finger- RING-type,Breast cancer type 1 susceptibility protein (BRCA1);BRCA1-associated
+O75845,IPR006694,NULL,Fatty acid hydroxylase,NULL
+P46695,NULL,IPR024829,NULL,Radiation-inducible immediate-early gene IEX-1
+O75293,IPR004038,IPR024824,Ribosomal protein L7Ae/L30e/S12e/Gadd45,Growth arrest and DNA damage-inducible protein GADD45
+P00750,IPR000742;IPR000083;IPR000001;IPR001254,IPR001314;IPR026280;IPR034811,EGF-like domain;Fibronectin- type I;Kringle;Serine proteases- trypsin domain,Peptidase S1A- chymotrypsin family;Tissue plasminogen activator;Tissue-type plasminogen activator
+Q15173,NULL,IPR002554,NULL,Protein phosphatase 2A- regulatory B subunit- B56
+Q5T7M4,IPR001073,NULL,C1q domain,NULL
+P01583,IPR003502,IPR003295;IPR000975,Interleukin-1 propeptide,Interleukin-1 alpha;Interleukin-1 family
+P05067,IPR013803;IPR011178;IPR024329;IPR008154;IPR015849;IPR019543;IPR002223,IPR008155;IPR028866,Amyloidogenic glycoprotein- amyloid-beta peptide;Amyloidogenic glycoprotein- copper-binding;Amyloidogenic glycoprotein- E2 domain;Amyloidogenic glycoprotein- extracellular;Amyloidogenic glycoprotein- heparin-binding;Beta-amyloid precursor protein C-terminal;Pancreatic trypsin inhibitor Kunitz domain,Amyloidogenic glycoprotein;Amyloid beta A4 protein
+P09104,IPR020810;IPR020811,IPR000941;IPR034390,Enolase- C-terminal TIM barrel domain;Enolase- N-terminal,Enolase;Enolase-like superfamily
+P42575,IPR001315;IPR002138;IPR001309;IPR015917,IPR035702,CARD domain;Peptidase C14- caspase non-catalytic subunit p10;Peptidase C14-  p20 domain;Peptidase C14A- caspase catalytic domain,Caspase-2
+P78543,IPR002087,IPR033328,Anti-proliferative protein,Protein BTG2
+Q9NQC7,IPR000938;IPR001394;IPR028889,NULL,CAP Gly-rich domain;Peptidase C19- ubiquitin carboxyl-terminal hydrolase;Ubiquitin specific protease domain,NULL
+P16035,IPR001134,IPR001820;IPR015613,Netrin domain,Protease inhibitor I35 (TIMP);Metalloproteinase inhibitor 2
+Q13501,IPR000270;IPR034866;IPR033741;IPR015940;IPR000433,NULL,PB1 domain;Sequestosome-1- PB1 domain;Sequestosome-1- UBA domain;Ubiquitin-associated domain;Zinc finger- ZZ-type,NULL
+Q06889,IPR021849;IPR013087,NULL,Early growth response protein;Zinc finger C2H2-type,NULL
+P61221,IPR017896;IPR003593;IPR003439;IPR034348;IPR007209,IPR013283,4Fe-4S ferredoxin-type- iron-sulphur binding domain;AAA+ ATPase domain;ABC transporter-like;RLI- domain 1;RNase L inhibitor RLI- possible metal-binding domain,RLI1
+P50995,NULL,IPR001464;IPR008157,NULL,Annexin;Annexin A11
+P49768,NULL,IPR002031;IPR001108;IPR006639,NULL,Peptidase A22A- presenilin 1;Peptidase A22A- presenilin;Presenilin/signal peptide peptidase
+Q7Z2D5,IPR000326,IPR028684,Phosphatidic acid phosphatase type 2/haloperoxidase,Phospholipid phosphatase-related protein type 4
+P22352,NULL,IPR000889,NULL,Glutathione peroxidase
+P62495,IPR005140;IPR005141;IPR005142,IPR004403,eRF1 domain 1/Pelota-like;eRF1 domain 2;eRF1 domain 3,Peptide chain release factor eRF1/aRF1
+P35222,NULL,IPR013284,NULL,Beta-catenin
+Q9NSY1,IPR028182;IPR000719,IPR026105,BMP-2-inducible protein kinase- C-terminal;Protein kinase domain,BMP-2-inducible protein kinase
+Q14511,IPR021901;IPR035746;IPR014928;IPR001452,NULL,CAS family- C-terminal;Enhancer of filamentation 1- SH3 domain;Serine rich protein interaction;SH3 domain,NULL
+P29466,IPR001315;IPR002138;IPR001309;IPR015917,NULL,CARD domain;Peptidase C14- caspase non-catalytic subunit p10;Peptidase C14-  p20 domain;Peptidase C14A- caspase catalytic domain,NULL
+P30793,IPR020602,IPR001474,GTP cyclohydrolase I domain,GTP cyclohydrolase I
+O00429,IPR000375;IPR001401;IPR030381;IPR003130;IPR020850,IPR030556;IPR022812,Dynamin central domain;Dynamin- GTPase domain;Dynamin-type guanine nucleotide-binding (G) domain;Dynamin GTPase effector;GTPase effector domain,Dynamin-1-like protein;Dynamin superfamily
+O75354,NULL,IPR000407,NULL,Nucleoside phosphatase GDA1/CD39
+P01574,NULL,IPR000471;IPR015588,NULL,Interferon alpha/beta/delta;Interferon beta
+P55957,NULL,IPR010479,NULL,BH3-interacting domain death agonist
+Q14CZ7,IPR013579;IPR010622;IPR013584,NULL,FAST kinase-like protein- subdomain 2;FAST kinase leucine-rich;RAP domain,NULL
+Q96LC9,NULL,IPR028192,NULL,Bcl-2-modifying factor
+P21860,IPR006211;IPR032778;IPR000719;IPR000494;IPR001245,IPR016245,Furin-like cysteine-rich domain;Growth factor receptor domain 4;Protein kinase domain;Receptor L-domain;Serine-threonine/tyrosine-protein kinase- catalytic domain,Tyrosine protein kinase- EGF/ERB/XmrK receptor
+P10914,IPR001346,IPR031215;IPR017431,Interferon regulatory factor DNA-binding domain,Interferon regulatory factor 1;Interferon regulatory factor-1/2
+Q92793,IPR001487;IPR031162;IPR003101;IPR014744;IPR010303;IPR000197;IPR000433,IPR013178,Bromodomain;CBP/p300-type histone acetyltransferase domain;Coactivator CBP- KIX domain;Nuclear receptor coactivator- CREB-bp-like- interlocking;CREB-binding protein/p300- atypical RING domain;Zinc finger- TAZ-type;Zinc finger- ZZ-type,Histone acetyltransferase Rtt109/CBP
+P63098,IPR002048,NULL,EF-hand domain,NULL
+Q01628,NULL,IPR007593,NULL,CD225/Dispanin family
+P01033,IPR001134,IPR001820;IPR015611,Netrin domain,Protease inhibitor I35 (TIMP);Metalloproteinase inhibitor 1
+Q9H3M7,IPR011021;IPR011022,NULL,Arrestin-like- N-terminal;Arrestin C-terminal-like domain,NULL
+Q9UKL3,NULL,NULL,NULL,NULL
+P55210,IPR002138;IPR001309;IPR015917,NULL,Peptidase C14- caspase non-catalytic subunit p10;Peptidase C14-  p20 domain;Peptidase C14A- caspase catalytic domain,NULL
+Q14201,IPR002087,NULL,Anti-proliferative protein,NULL
+Q53GD3,NULL,IPR007603,NULL,Choline transporter-like
+O00273,IPR003508;IPR015121,IPR017299,CIDE-N domain;DNA fragmentation factor 45kDa- middle domain,DNA fragmentation factor subunit alpha
+P31689,IPR002939;IPR001623;IPR001305,IPR012724,Chaperone DnaJ- C-terminal;DnaJ domain;Heat shock protein DnaJ- cysteine-rich domain,Chaperone DnaJ
+P24522,IPR004038,IPR024824,Ribosomal protein L7Ae/L30e/S12e/Gadd45,Growth arrest and DNA damage-inducible protein GADD45
+Q3LI54,NULL,IPR021743,NULL,Keratin-associated protein- type6/8/16/19/20/21
+Q92851,IPR001875;IPR002138;IPR001309;IPR015917,IPR035701,Death effector domain;Peptidase C14- caspase non-catalytic subunit p10;Peptidase C14-  p20 domain;Peptidase C14A- caspase catalytic domain,Caspase-10
+P35638,IPR004827,IPR016670,Basic-leucine zipper domain,DNA damage-inducible transcript 3
+P02545,IPR001322,IPR001664,Lamin tail domain,Intermediate filament protein
+P16070,IPR000538,IPR001231,Link domain,CD44 antigen
+Q01718,IPR017452,IPR001168;IPR000276;IPR001671,GPCR- rhodopsin-like- 7TM,Adrenocorticotrophin (ACTH) receptor;G protein-coupled receptor- rhodopsin-like;Melanocortin/ACTH receptor
+P08571,NULL,IPR016337,NULL,Monocyte differentiation antigen CD14
+Q8IXI1,IPR013566;IPR013567;IPR002048;IPR020860,IPR021181;IPR001806,EF hand associated- type-1;EF hand associated- type-2;EF-hand domain;MIRO domain,Mitochondrial Rho GTPase;Small GTPase superfamily
+Q15121,IPR001875,IPR029546,Death effector domain,Astrocytic phosphoprotein PEA-15
+Q14956,IPR022409;IPR000601,NULL,PKD/Chitinase domain;PKD domain,NULL
+P22570,IPR023753,IPR021163,FAD/NAD(P)-binding domain,Ferredoxin-NADP+ reductase- adrenodoxin-type
+Q8WTP8,IPR013520,NULL,Exonuclease- RNase T/DNA polymerase III,NULL
+P48023,IPR006052,IPR028326;IPR006053,Tumour necrosis factor domain,Tumor necrosis factor ligand superfamily member 6;Tumour necrosis factor
+P24941,IPR000719,NULL,Protein kinase domain,NULL
+Q04206,IPR002909;IPR033926;IPR032397;IPR011539,IPR000451;IPR030495,IPT domain;NFkappaB IPT domain;Rel homology dimerisation domain;Rel homology domain (RHD)- DNA-binding domain,NF-kappa-B/Dorsal;Transcription factor RelA (p65)
+P51572,NULL,IPR008417,NULL,B-cell receptor-associated protein 29/31
+O75689,IPR001849,IPR001164,Pleckstrin homology domain,Arf GTPase activating protein
+Q03167,IPR001507,NULL,Zona pellucida domain,NULL
+P45880,NULL,IPR001925;IPR027246;IPR030277,NULL,Porin- eukaryotic type;Eukaryotic porin/Tom40;Voltage-dependent anion-selective channel protein 2
+Q5H9B9,IPR028182,IPR026105,BMP-2-inducible protein kinase- C-terminal,BMP-2-inducible protein kinase
+P11388,IPR012542;IPR003594;IPR002205;IPR013506;IPR031660;IPR006171;IPR034157,IPR001241,DTHCT;Histidine kinase/HSP90-like ATPase;DNA topoisomerase- type IIA- subunit A/C-terminal;DNA topoisomerase- type IIA- subunit B- domain 2;C-terminal associated domain of TOPRIM;TOPRIM  domain;DNA topoisomerase 2- TOPRIM domain,DNA topoisomerase- type IIA
+P05783,NULL,IPR001664;IPR027695;IPR002957,NULL,Intermediate filament protein;Keratin- type I cytoskeletal 18;Keratin- type I
+P50591,IPR006052,IPR017355,Tumour necrosis factor domain,Tumour necrosis factor ligand 10/11
+P00441,IPR001424,IPR024134,Superoxide dismutase- copper/zinc binding domain,Superoxide dismutase (Cu/Zn) / superoxide dismutase copper chaperone
+Q8WXG6,IPR005112;IPR001194;IPR005113,NULL,dDENN domain;cDENN domain;uDENN domain,NULL
+P55212,IPR002138;IPR001309;IPR015917,NULL,Peptidase C14- caspase non-catalytic subunit p10;Peptidase C14-  p20 domain;Peptidase C14A- caspase catalytic domain,NULL
+P24592,IPR000867;IPR000716,IPR022326;IPR009168;IPR022321,Insulin-like growth factor-binding protein- IGFBP;Thyroglobulin type-1,Insulin-like growth factor-binding protein 6;Insulin-like growth factor binding protein;Insulin-like growth factor-binding protein family 1-6- chordata
+Q6GPH4,IPR001293,IPR031220,Zinc finger- TRAF-type,XIAP-associated factor 1
+Q53EL6,IPR003891,NULL,Initiation factor eIF-4 gamma- MA3,NULL
+P09601,NULL,IPR002051;IPR016053,NULL,Haem oxygenase;Haem oxygenase-like
+Q14289,IPR019749;IPR019748;IPR000299;IPR005189;IPR000719;IPR001245;IPR020635,IPR030610,Band 4.1 domain;FERM central domain;FERM domain;Focal adhesion kinase- targeting (FAT) domain;Protein kinase domain;Serine-threonine/tyrosine-protein kinase- catalytic domain;Tyrosine-protein kinase- catalytic domain,Protein-tyrosine kinase 2-beta
+Q9NR28,NULL,IPR015142,NULL,Smac/DIABLO protein
+O95999,IPR001315,IPR033238,CARD domain,B-cell lymphoma/leukemia 10/E10
+P17931,IPR001079,IPR015534,Galectin- carbohydrate recognition domain,Galectin-3
+P21810,IPR000372,IPR028547;IPR016352,Leucine-rich repeat N-terminal domain,Biglycan;Small leucine-rich proteoglycan- class I- decorin/asporin/byglycan
+P36969,NULL,IPR000889,NULL,Glutathione peroxidase
+O95886,NULL,IPR030526;IPR005026,NULL,Disks large-associated protein 3;SAPAP family
+Q92843,IPR003093,IPR013280;IPR002475;IPR026298,Apoptosis regulator- Bcl-2 protein- BH4,Apoptosis regulator- Bcl-W;Bcl2-like;Blc2 family
+P11717,IPR000562,NULL,Fibronectin type II domain,NULL
+P42574,IPR002138;IPR001309;IPR015917,NULL,Peptidase C14- caspase non-catalytic subunit p10;Peptidase C14-  p20 domain;Peptidase C14A- caspase catalytic domain,NULL
+Q13324,IPR017981;IPR001879,IPR003053;IPR003051;IPR000832,GPCR- family 2-like;GPCR- family 2- extracellular hormone receptor domain,GPCR- family 2- corticotropin releasing factor receptor- type 2;GPCR- family 2- corticotropin releasing factor receptor;GPCR- family 2- secretin-like
+Q99689,NULL,IPR011680;IPR015642,NULL,Fasciculation and elongation protein zeta- FEZ;Fasciculation and elongation protein zeta 1
+P35625,IPR001134,IPR001820;IPR015612,Netrin domain,Protease inhibitor I35 (TIMP);Metalloproteinase inhibitor 3
+P04792,IPR002068,IPR001436;IPR031107,Alpha crystallin/Hsp20 domain,Alpha crystallin/Heat shock protein;Small heat shock protein HSP20
+P00390,IPR023753;IPR004099,IPR006322;IPR001100,FAD/NAD(P)-binding domain;Pyridine nucleotide-disulphide oxidoreductase- dimerisation domain,Glutathione reductase- eukaryote/bacterial;Pyridine nucleotide-disulphide oxidoreductase- class I
+Q6NUM9,NULL,NULL,NULL,NULL
+O15105,IPR003619;IPR013019;IPR001132,IPR013790,MAD homology 1- Dwarfin-type;MAD homology- MH1;SMAD domain- Dwarfin-type,Dwarfin
+P10276,IPR000536;IPR001628,IPR001723;IPR003078,Nuclear hormone receptor- ligand-binding domain;Zinc finger- nuclear hormone receptor-type,Nuclear hormone receptor;Retinoic acid receptor
+Q07812,NULL,IPR026304;IPR002475;IPR026298,NULL,Apoptosis regulator BAX;Bcl2-like;Blc2 family
+P04179,IPR019832;IPR019831,IPR001189,Manganese/iron superoxide dismutase- C-terminal;Manganese/iron superoxide dismutase- N-terminal,Manganese/iron superoxide dismutase
+P30305,IPR001763,IPR000751,Rhodanese-like domain,M-phase inducer phosphatase
+Q13794,NULL,IPR024140,NULL,Phorbol-12-myristate-13-acetate-induced protein 1
+P14222,IPR000008;IPR020864,NULL,C2 domain;Membrane attack complex component/perforin (MACPF) domain,NULL
+Q96T52,IPR015927,IPR000223,Peptidase S24/S26A/S26B/S26C,Peptidase S26A- signal peptidase I
+O95832,NULL,IPR006187;IPR003548;IPR004031,NULL,Claudin;Claudin-1;PMP-22/EMP/MP20/Claudin superfamily
+P78396,IPR013763;IPR004367;IPR006671,NULL,Cyclin-like;Cyclin- C-terminal domain;Cyclin- N-terminal,NULL
+P38936,NULL,IPR003175;IPR029841,NULL,Cyclin-dependent kinase inhibitor;Cyclin-dependent kinase inhibitor 1- vertebrate
+P09619,IPR007110;IPR013098;IPR003599;IPR003598;IPR013151;IPR000719;IPR001245;IPR020635,IPR027288,Immunoglobulin-like domain;Immunoglobulin I-set;Immunoglobulin subtype;Immunoglobulin subtype 2;Immunoglobulin;Protein kinase domain;Serine-threonine/tyrosine-protein kinase- catalytic domain;Tyrosine-protein kinase- catalytic domain,Platelet-derived growth factor receptor beta
+Q13153,IPR000095;IPR033923;IPR000719,NULL,CRIB domain;p21 activated kinase binding domain;Protein kinase domain,NULL
+Q9Y3L3,IPR004148;IPR000198,NULL,BAR domain;Rho GTPase-activating protein domain,NULL
+O95256,IPR007110;IPR003599;IPR000157,IPR015621,Immunoglobulin-like domain;Immunoglobulin subtype;Toll/interleukin-1 receptor homology (TIR) domain,Interleukin-1 receptor family
+P15260,IPR003961;IPR021126,IPR008355,Fibronectin type III;Interferon gamma receptor- poxvirus/mammal,Interferon gamma receptor alpha subunit
+Q96RT1,IPR001478,IPR032927,PDZ domain,Erbin
+Q9BXK5,NULL,IPR002475;IPR026298,NULL,Bcl2-like;Blc2 family
+P55211,IPR001315;IPR002138;IPR001309;IPR015917,IPR033171,CARD domain;Peptidase C14- caspase non-catalytic subunit p10;Peptidase C14-  p20 domain;Peptidase C14A- caspase catalytic domain,Caspase-9
+P06396,IPR007123,IPR030004;IPR007122,Gelsolin-like domain,Gelsolin;Villin/Gelsolin
+P09488,IPR010987;IPR004045;IPR004046,IPR003081,Glutathione S-transferase- C-terminal-like;Glutathione S-transferase- N-terminal;Glutathione S-transferase- C-terminal,Glutathione S-transferase- Mu class
+Q0P651,NULL,IPR019149,NULL,Abhydrolase domain containing 18
+Q9HD36,NULL,IPR002475;IPR026298,NULL,Bcl2-like;Blc2 family
+P49662,IPR001315;IPR002138;IPR001309;IPR015917,NULL,CARD domain;Peptidase C14- caspase non-catalytic subunit p10;Peptidase C14-  p20 domain;Peptidase C14A- caspase catalytic domain,NULL
+Q01826,IPR003350;IPR032355;IPR001356;IPR032392,NULL,CUT domain;SATB- CUT1-like DNA-binding domain;Homeobox domain;SATB- ubiquitin-like oligomerisation domain,NULL
+P35611,IPR001303,IPR027766,Class II aldolase/adducin N-terminal,Alpha-adducin
+P62745,IPR005225,IPR001806;IPR003578,Small GTP-binding protein domain,Small GTPase superfamily;Small GTPase superfamily- Rho type
